@@ -30,5 +30,11 @@ namespace Validator
             BigInteger value;
             return BigInteger.TryParse(input, out value);
         }
+
+        public static bool IsFloat(string input)
+        {
+            float value;
+            return float.TryParse(input, out value);
+        }
     }
 }

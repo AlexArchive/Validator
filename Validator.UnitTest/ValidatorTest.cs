@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using Xunit.Extensions;
+using Xunit.Sdk;
 
 namespace Validator.UnitTest
 {
@@ -69,6 +70,16 @@ namespace Validator.UnitTest
         public void IsInt(string input, bool expected)
         {
             var actual = Validator.IsInt(input);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("123.123", true)]
+        [InlineData("123", true)]
+        [InlineData("", false)]
+        public void IsFloat(string input, bool expected)
+        {
+            var actual = Validator.IsFloat(input);
             Assert.Equal(expected, actual);
         }
     }
