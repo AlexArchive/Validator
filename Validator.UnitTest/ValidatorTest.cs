@@ -47,5 +47,17 @@ namespace Validator.UnitTest
             var actual = Validator.IsUppercase(input);
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData("SGk=", true)]
+        [InlineData("VmFsaWRhdG9y", true)]
+        [InlineData("Foo", false)]
+        [InlineData("Foo\r\nBar", false)]
+        [InlineData("Foo?", false)]
+        public void IsBase64(string input, bool expected)
+        {
+            var actual = Validator.IsBase64(input);
+            Assert.Equal(expected, actual);
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Validator
 {
-    public class Validator
+    public partial class Validator
     {
         public static bool IsAlpha(string input)
         {
@@ -13,7 +13,6 @@ namespace Validator
         {
             return Regex.IsMatch(input, "^[0-9]+$");
         }
-
 
         public static bool IsLowercase(string input)
         {
