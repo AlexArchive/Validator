@@ -36,5 +36,15 @@ namespace Validator
             float value;
             return float.TryParse(input, out value);
         }
+
+        public static bool IsDivisibleBy(string input, int @by)
+        {
+            int value;
+            if (!int.TryParse(input, out value))
+            {
+                return false;
+            }
+            return value % @by == 0;
+        }
     }
 }
