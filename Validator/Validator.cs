@@ -13,5 +13,11 @@ namespace Validator
         {
             return Regex.IsMatch(input, "^[0-9]+$");
         }
+
+
+        public static bool IsLowercase(string input)
+        {
+            return input == input.ToLower();
+        }
     }
 }
