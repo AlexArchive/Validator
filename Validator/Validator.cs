@@ -19,5 +19,10 @@ namespace Validator
         {
             return input == input.ToLower();
         }
+
+        public static bool IsUppercase(string input)
+        {
+            return input == input.ToUpper();
+        }
     }
 }
