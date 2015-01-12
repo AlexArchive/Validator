@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using Xunit.Extensions;
+using Xunit.Sdk;
 
 namespace Validator.UnitTest
 {
@@ -13,6 +14,16 @@ namespace Validator.UnitTest
         public void IsAlpha_ReturnsCorrectResult(string input, bool expected)
         {
             var actual = Validator.IsAlpha(input);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("123", true)]
+        [InlineData("Foo", false)]
+        [InlineData("123Foo123", false)]
+        public void IsNumeric_ReturnsCorrectResult(string input, bool expected)
+        {
+            var actual = Validator.IsNumeric(input);
             Assert.Equal(expected, actual);
         }
     }
