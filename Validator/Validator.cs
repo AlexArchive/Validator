@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Numerics;
+using System.Text.RegularExpressions;
 
 namespace Validator
 {
@@ -22,6 +23,12 @@ namespace Validator
         public static bool IsUppercase(string input)
         {
             return input == input.ToUpper();
+        }
+
+        public static bool IsInt(string input)
+        {
+            BigInteger value;
+            return BigInteger.TryParse(input, out value);
         }
     }
 }
