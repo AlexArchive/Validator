@@ -157,5 +157,17 @@ namespace Validator.UnitTest
             var actual = Validator.IsEmail(input);
             Assert.Equal(actual, expected);
         }
+
+        [Theory]
+        [InlineData("deadBEEF", true)]
+        [InlineData("ff0044", true)]
+        [InlineData("abcdefg", false)]
+        [InlineData("", false)]
+        [InlineData("..", false)]
+        public void IsHexadecimal(string input, bool expected)
+        {
+            var actual = Validator.IsHexadecimal(input);
+            Assert.Equal(expected, actual);
+        }
     }
 }
