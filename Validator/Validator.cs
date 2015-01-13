@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Numerics;
 using System.Text.RegularExpressions;
 
@@ -72,6 +74,23 @@ namespace Validator
         public static bool IsIn(string input, string[] values)
         {
             return values.Any(value => value == input);
+        }
+
+        public static bool IsIp(string input, IpVersion version)
+        {
+            IPAddress address;
+            if (IPAddress.TryParse(input, out address))
+            {
+                if (address.AddressFamily == AddressFamily.InterNetwork && version == IpVersion.Four)
+                {
+                    return true;
+                }
+                if (address.AddressFamily == AddressFamily.InterNetworkV6 && version == IpVersion.Six)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
