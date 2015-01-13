@@ -66,8 +66,12 @@ namespace Validator
 
         public static bool IsAscii(string input)
         {
-            return input.Select(c => (int) c)
-                .All(c => c <= 127);
+            return input.Select(c => (int) c).All(c => c <= 127);
+        }
+
+        public static bool IsIn(string input, string[] values)
+        {
+            return values.Any(value => value == input);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Net.Configuration;
+﻿using System.Linq.Expressions;
+using System.Net.Configuration;
 using Xunit;
 using Xunit.Extensions;
 using Xunit.Sdk;
@@ -114,6 +115,16 @@ namespace Validator.UnitTest
         public void IsAscii(string input, bool expected)
         {
             var actual = Validator.IsAscii(input);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("Foo", new[] { "Foo", "Bar" }, true)]
+        [InlineData("Bar", new[] { "Foo", "Bar" }, true)]
+        [InlineData("Baz", new[] { "Foo", "Bar" }, false)]
+        public void IsIn(string input, string[] values, bool expected)
+        {
+            var actual = Validator.IsIn(input, values);
             Assert.Equal(expected, actual);
         }
 
