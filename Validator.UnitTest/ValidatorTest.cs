@@ -94,5 +94,16 @@ namespace Validator.UnitTest
             var actual = Validator.IsDivisibleBy(input, by);
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData("ab", 1, 2, true)]
+        [InlineData("abc", 1, 2, false)]
+        [InlineData("", 1, 2, false)]
+        public void IsLength(string input, int min, int max, bool expected)
+        {
+            var actual = Validator.IsLength(input, min, max);
+            Assert.Equal(expected, actual);
+        }
+
     }
 }

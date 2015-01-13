@@ -46,5 +46,20 @@ namespace Validator
             }
             return value % @by == 0;
         }
+
+        public static bool IsLength(string input, int min, int max)
+        {
+            if (input.Length < min)
+            {
+                return false;
+            }
+
+            if (input.Length > max)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
