@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Linq;
+using System.Numerics;
 using System.Text.RegularExpressions;
 
 namespace Validator
@@ -60,6 +62,12 @@ namespace Validator
             }
 
             return true;
+        }
+
+        public static bool IsAscii(string input)
+        {
+            return input.Select(c => (int) c)
+                .All(c => c <= 127);
         }
     }
 }

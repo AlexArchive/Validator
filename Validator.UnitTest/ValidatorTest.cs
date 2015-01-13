@@ -105,5 +105,17 @@ namespace Validator.UnitTest
             Assert.Equal(expected, actual);
         }
 
+        [Theory]
+        [InlineData("Foo", true)]
+        [InlineData("123", true)]
+        [InlineData("Foo@example.com", true)]
+        [InlineData("ｆｏｏ", false)]
+        [InlineData("１２３", false)]
+        public void IsAscii(string input, bool expected)
+        {
+            var actual = Validator.IsAscii(input);
+            Assert.Equal(expected, actual);
+        }
+
     }
 }
