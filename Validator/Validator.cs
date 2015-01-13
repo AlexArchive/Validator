@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -91,6 +92,11 @@ namespace Validator
                 }
             }
             return false;
+        }
+
+        public static bool IsEmail(string input)
+        {
+            return new EmailAddressAttribute().IsValid(input);
         }
     }
 }
