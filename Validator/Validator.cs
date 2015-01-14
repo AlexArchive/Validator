@@ -102,5 +102,10 @@ namespace Validator
         {
             return Regex.IsMatch(input, "^[0-9a-fA-F]+$");
         }
+
+        public static bool IsAlphanumeric(string input)
+        {
+            return Regex.IsMatch(input, "^[a-zA-Z0-9]+$");
+        }
     }
 }

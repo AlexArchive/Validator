@@ -1,5 +1,4 @@
-﻿using System.Data.SqlTypes;
-using Xunit;
+﻿using Xunit;
 using Xunit.Extensions;
 
 namespace Validator.UnitTest
@@ -167,6 +166,17 @@ namespace Validator.UnitTest
         public void IsHexadecimal(string input, bool expected)
         {
             var actual = Validator.IsHexadecimal(input);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("Foo1", true)]
+        [InlineData("foo1", true)]
+        [InlineData("Foo 1", false)]
+        [InlineData("Foo_", false)]
+        public void IsAlphanumeric(string input, bool expected)
+        {
+            var actual = Validator.IsAlphanumeric(input);
             Assert.Equal(expected, actual);
         }
     }
