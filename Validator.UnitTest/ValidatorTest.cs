@@ -10,6 +10,7 @@ namespace Validator.UnitTest
         [InlineData("1Foo", false)]
         [InlineData("123", false)]
         [InlineData("1Foo\r\n12", false)]
+        [InlineData("Foo_Bar", false)]
         public void IsAlpha(string input, bool expected)
         {
             var actual = Validator.IsAlpha(input);

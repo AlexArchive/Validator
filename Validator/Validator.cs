@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -12,7 +11,7 @@ namespace Validator
     {
         public static bool IsAlpha(string input)
         {
-            return Regex.IsMatch(input, "^[A-z]+$");
+            return Regex.IsMatch(input, "^[a-zA-Z]+$");
         }
 
         public static bool IsNumeric(string input)
