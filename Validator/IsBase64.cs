@@ -8,10 +8,9 @@ namespace Validator
         private const char paddingCharacter = '=';
         private static readonly HashSet<char> base64Characters = new HashSet<char>() 
         { 
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 
-            'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 
-            'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 
-            'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/', 
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+            'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5',
+            '6', '7', '8', '9', '+', '/', 
         };
 
         public static bool IsBase64(string input)
@@ -37,7 +36,7 @@ namespace Validator
 
         private static string SanetizeInput(string value)
         {
-            return value.Replace("\r", string.Empty).Replace("\n", string.Empty);
+            return value.Replace("\r", string.Empty).Replace("\n", string.Empty).ToLower();
         }
     }
 }
