@@ -123,5 +123,10 @@ namespace Validator
                 .Sum((e) => e / 10 + e % 10);
             return sumOfDigits % 10 == 0;            
         }
+
+        public static bool IsHexColor(string input)
+        {
+            return Regex.IsMatch(input, "^#?(?:[0-9a-fA-F]{3}){1,2}$");
+        }
     }
 }
