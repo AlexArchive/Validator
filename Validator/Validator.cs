@@ -128,5 +128,10 @@ namespace Validator
         {
             return Regex.IsMatch(input, "^#?(?:[0-9a-fA-F]{3}){1,2}$");
         }
+
+        public static bool Equals(string input, string comparison)
+        {
+            return input.Equals(comparison);
+        }
     }
 }

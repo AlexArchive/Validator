@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Net.Configuration;
+using Xunit;
 using Xunit.Extensions;
 
 namespace Validator.UnitTest
@@ -117,9 +118,9 @@ namespace Validator.UnitTest
         }
 
         [Theory]
-        [InlineData("Foo", new[] { "Foo", "Bar" }, true)]
-        [InlineData("Bar", new[] { "Foo", "Bar" }, true)]
-        [InlineData("Baz", new[] { "Foo", "Bar" }, false)]
+        [InlineData("Foo", new[] {"Foo", "Bar"}, true)]
+        [InlineData("Bar", new[] {"Foo", "Bar"}, true)]
+        [InlineData("Baz", new[] {"Foo", "Bar"}, false)]
         public void IsIn(string input, string[] values, bool expected)
         {
             var actual = Validator.IsIn(input, values);
@@ -208,6 +209,16 @@ namespace Validator.UnitTest
         public void IsHexColor(string input, bool expected)
         {
             var actual = Validator.IsHexColor(input);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("Foo", true)]
+        [InlineData("Bar", false)]
+        [InlineData("Baz", false)]
+        public void IsEqual(string input, bool expected)
+        {
+            var actual = Validator.Equals(input, "Foo");
             Assert.Equal(expected, actual);
         }
     }
