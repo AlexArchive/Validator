@@ -221,5 +221,15 @@ namespace Validator.UnitTest
             var actual = Validator.Equals(input, "Foo");
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData("Not a JSON string", false)]
+        [InlineData("{\"username\":\"Admin\",\"uuid\":\"d27aa483-a08d-4b7f-a2f1-b22dcd4af678\"}", true)]
+        [InlineData("{\"username\":\"Admin\",\"uuid\":\"d27aa483-a08d-4b7f-a2f1-b22dcd4af678", false)]
+        public void IsJson(string input, bool expected)
+        {
+            var actual = Validator.IsJson(input);
+            Assert.Equal(expected, actual);
+        }
     }
 }
