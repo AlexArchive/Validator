@@ -6,11 +6,12 @@ namespace Validator
     public partial class Validator
     {
         private const char paddingCharacter = '=';
-        private static readonly HashSet<char> base64Characters = new HashSet<char>() 
-        { 
+
+        private static readonly HashSet<char> base64Characters = new HashSet<char>()
+        {
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
             'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5',
-            '6', '7', '8', '9', '+', '/', 
+            '6', '7', '8', '9', '+', '/',
         };
 
         public static bool IsBase64(string input)
