@@ -1,6 +1,7 @@
 ﻿using System.Net.Configuration;
 using Xunit;
 using Xunit.Extensions;
+using Xunit.Sdk;
 
 namespace Validator.UnitTest
 {
@@ -229,6 +230,17 @@ namespace Validator.UnitTest
         public void IsJson(string input, bool expected)
         {
             var actual = Validator.IsJson(input);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("Not a date", false)]
+        [InlineData("01/01/2001", true)]
+        [InlineData("50/20/2017", false)]
+        [InlineData("01-01-2001", true)]
+        public void IsDate(string input, bool expected)
+        {
+            var actual = Validator.IsDate(input);
             Assert.Equal(expected, actual);
         }
     }
