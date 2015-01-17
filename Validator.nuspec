@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <title>Validator</title>
+    <id>ByteBlast.Validator</id>
+    <version>$version$</version>
+    <authors>ByteBlast</authors>
+    <licenseUrl>https://github.com/ByteBlast/Validator/blob/master/Licence.Md</licenseUrl>
+    <projectUrl>https://github.com/ByteBlast/Validator</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Validator is a validation library.</description>
+    <tags>validation validator</tags>
+  </metadata>
+  <files>
+     <file src="Validator\bin\Release\Validator.dll" target="lib\net45" />
+  </files>
+</package>

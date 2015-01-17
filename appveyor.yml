@@ -1,0 +1,27 @@
+version: 0.0.{build}
+
+configuration: Release
+
+before_build:
+- ps: nuget restore
+
+after_test: 
+  - ps: .\pack.ps1
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+
+artifacts:
+  - path: Validator\bin\Release\Validator.dll
+    name: Validator.dll
+  - path: '*.nupkg'
+
+deploy:
+  provider: NuGet
+  api_key:
+    secure: nNSph3Dq/TzagoVe4hfJyBl6Nais/fya4BARkoARmTvstPoTlavwCVyoqWD4B6JN
+  artifact: /.*\.nupkg/

@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/596ap7x5686he70k?svg=true)](https://ci.appveyor.com/project/ByteBlast/validator)
+[![Build status](https://ci.appveyor.com/api/projects/status/pt6cdok1qrimuftg?svg=true)](https://ci.appveyor.com/project/ByteBlast/validator)
 
 # Validator
 
