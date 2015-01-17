@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -14,23 +15,36 @@ namespace Validator
             return Regex.IsMatch(input, "^[a-zA-Z]+$");
         }
 
-        public static bool IsNumeric(string input)
-        {
-            return Regex.IsMatch(input, "^[0-9]+$");
-        }
-
         public static bool IsLowercase(string input)
         {
-            return input == input.ToLower();
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (Char.IsLetter(input[i]) && !Char.IsLower(input[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static bool IsUppercase(string input)
         {
-            return input == input.ToUpper();
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (Char.IsLetter(input[i]) && !Char.IsUpper(input[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static bool IsInt(string input)
         {
+            if (!IsNumeric(input))
+            {
+                return false;
+            }
             BigInteger value;
             return BigInteger.TryParse(input, out value);
         }
@@ -43,6 +57,10 @@ namespace Validator
 
         public static bool IsDivisibleBy(string input, int @by)
         {
+            if (!IsNumeric(input))
+            {
+                return false;
+            }
             int value;
             if (!int.TryParse(input, out value))
             {
@@ -106,22 +124,6 @@ namespace Validator
         public static bool IsAlphanumeric(string input)
         {
             return Regex.IsMatch(input, "^[a-zA-Z0-9]+$");
-        }
-
-        public static bool IsCreditCard(string input)
-        {
-            input = input.Replace(" ", "");
-            input = input.Replace("-", "");
-            if (!IsNumeric(input))
-            {
-                return false;
-            }
-            int sumOfDigits = input
-                .Where((e) => e >= '0' && e <= '9')
-                .Reverse()
-                .Select((e, i) => ((int)e - 48) * (i % 2 == 0 ? 1 : 2))
-                .Sum((e) => e / 10 + e % 10);
-            return sumOfDigits % 10 == 0;            
         }
 
         public static bool IsHexColor(string input)
