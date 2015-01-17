@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Net.Configuration;
+using Xunit;
 using Xunit.Extensions;
 
 namespace Validator.UnitTest
@@ -21,8 +22,6 @@ namespace Validator.UnitTest
         [InlineData("123", true)]
         [InlineData("Foo", false)]
         [InlineData("123Foo123", false)]
-        [InlineData("-100", true)]
-        [InlineData("-101010.523", false)]
         public void IsNumeric(string input, bool expected)
         {
             var actual = Validator.IsNumeric(input);
@@ -119,9 +118,9 @@ namespace Validator.UnitTest
         }
 
         [Theory]
-        [InlineData("Foo", new[] { "Foo", "Bar" }, true)]
-        [InlineData("Bar", new[] { "Foo", "Bar" }, true)]
-        [InlineData("Baz", new[] { "Foo", "Bar" }, false)]
+        [InlineData("Foo", new[] {"Foo", "Bar"}, true)]
+        [InlineData("Bar", new[] {"Foo", "Bar"}, true)]
+        [InlineData("Baz", new[] {"Foo", "Bar"}, false)]
         public void IsIn(string input, string[] values, bool expected)
         {
             var actual = Validator.IsIn(input, values);
