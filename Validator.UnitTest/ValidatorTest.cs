@@ -1,7 +1,5 @@
-﻿using System.Net.Configuration;
-using Xunit;
+﻿using Xunit;
 using Xunit.Extensions;
-using Xunit.Sdk;
 
 namespace Validator.UnitTest
 {
@@ -224,20 +222,26 @@ namespace Validator.UnitTest
         }
 
         [Theory]
+        [InlineData(null, false)]
         [InlineData("Not a JSON string", false)]
-        [InlineData("{\"username\":\"Admin\",\"uuid\":\"d27aa483-a08d-4b7f-a2f1-b22dcd4af678\"}", true)]
-        [InlineData("{\"username\":\"Admin\",\"uuid\":\"d27aa483-a08d-4b7f-a2f1-b22dcd4af678", false)]
+        [InlineData("{\"username\":\"Admin\"}", true)]
+        [InlineData("{username:\"Admin\"", false)]
         public void IsJson(string input, bool expected)
         {
             var actual = Validator.IsJson(input);
             Assert.Equal(expected, actual);
         }
-
+        
         [Theory]
+        [InlineData(null, false)]
+        [InlineData("", false)]
         [InlineData("Not a date", false)]
         [InlineData("01/01/2001", true)]
         [InlineData("50/20/2017", false)]
         [InlineData("01-01-2001", true)]
+        [InlineData("2001/01/01", true)]
+        [InlineData("01.01.2001", true)]
+        [InlineData("Not05/01A/date/2001", false)]
         public void IsDate(string input, bool expected)
         {
             var actual = Validator.IsDate(input);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using System.Web.Script.Serialization;
 
 namespace Validator
 {
@@ -110,6 +111,26 @@ namespace Validator
         public static bool Equals(string input, string comparison)
         {
             return input.Equals(comparison);
+        }
+
+        public static bool IsDate(string input)
+        {
+            DateTime date;
+            return DateTime.TryParse(input, out date);
+        }
+
+        public static bool IsJson(string input)
+        {
+            try
+            {
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                serializer.Deserialize<dynamic>(input);
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
