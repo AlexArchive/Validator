@@ -132,5 +132,10 @@ namespace Validator
             }
             return true;
         }
+
+        public static bool IsNull(string input)
+        {
+            return input == null;
+        }
     }
 }
