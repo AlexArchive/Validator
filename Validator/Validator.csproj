@@ -45,6 +45,7 @@
     <Compile Include="IpVersion.cs" />
     <Compile Include="IsBase64.cs" />
     <Compile Include="IsCreditCard.cs" />
+    <Compile Include="IsIsbn.cs" />
     <Compile Include="IsNumeric.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validator.cs" />
