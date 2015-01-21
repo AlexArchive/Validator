@@ -247,5 +247,16 @@ namespace Validator.UnitTest
             var actual = Validator.IsDate(input);
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData(null, true)]
+        [InlineData("", false)]
+        [InlineData("  ", false)]
+        [InlineData("NULL", false)]
+        public void IsNull(string input, bool expected)
+        {
+            var actual = Validator.IsNull(input);
+            Assert.Equal(expected, actual);
+        }
     }
 }
