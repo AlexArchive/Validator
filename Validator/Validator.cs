@@ -81,6 +81,11 @@ namespace Validator
             return Regex.IsMatch(input, "[^\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]");
         }
 
+        public static bool IsSurrogatePair(string input)
+        {
+            return Regex.IsMatch(input, "[\uD800-\uDBFF][\uDC00-\uDFFF]");
+        }
+
         public static bool IsIn(string input, string[] values)
         {
             return values.Any(value => value == input);
