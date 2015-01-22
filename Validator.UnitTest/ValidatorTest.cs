@@ -289,5 +289,23 @@ namespace Validator.UnitTest
             var actual = Validator.Contains(input, element);
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData("http://Microsoft.com", true)]
+        [InlineData("https://api.trello.com/1/boards/4d5ea62fd76aa1136000000c", true)]
+        [InlineData("ftp://ftp.funet.fi/pub/standards/RFC/rfc959.txt", true)]
+        [InlineData("http://www.nerddinner.com/Services/OData.svc/", true)] // OData url
+        [InlineData("", false)]
+        [InlineData(null, false)]
+        [InlineData("InvalidUrl", false)]
+        [InlineData("01/01/01", false)]
+        [InlineData("0123456789", false)]
+        [InlineData("!@#$%^", false)]
+        [InlineData("abc@xyz.com", false)]
+        public void IsUrl(string url, bool expected)
+        {
+            var actual = Validator.IsUrl(url);
+            Assert.Equal(expected, actual);
+        }
     }
 }
