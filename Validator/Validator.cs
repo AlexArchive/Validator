@@ -81,6 +81,11 @@ namespace Validator
             return Regex.IsMatch(input, "[^\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]");
         }
 
+        public static bool IsVariableWidth(string input)
+        {
+            return IsHalfWidth(input) && IsFullWidth(input);
+        }
+
         public static bool IsSurrogatePair(string input)
         {
             return Regex.IsMatch(input, "[\uD800-\uDBFF][\uDC00-\uDFFF]");
