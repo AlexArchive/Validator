@@ -1,5 +1,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/pt6cdok1qrimuftg?svg=true)](https://ci.appveyor.com/project/ByteBlast/validator)
-![](http://www.issuestats.com/github/byteblast/Validator/badge/pr?style=flat)
+[![Pull request](http://www.issuestats.com/github/byteblast/Validator/badge/pr?style=flat)](http://www.issuestats.com/github/byteblast/validator)
+
+
 
 
 # Validator
