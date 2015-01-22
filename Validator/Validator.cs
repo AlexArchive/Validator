@@ -66,6 +66,11 @@ namespace Validator
             return input.Select(c => (int)c).All(c => c <= 127);
         }
 
+        public static bool IsMultiByte(string input)
+        {
+            return Regex.IsMatch(input, "[^\x00-\x7F]");
+        }
+
         public static bool IsIn(string input, string[] values)
         {
             return values.Any(value => value == input);
