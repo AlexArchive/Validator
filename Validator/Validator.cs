@@ -144,6 +144,24 @@ namespace Validator
             return DateTime.TryParse(input, out date);
         }
 
+        public static bool IsAfter(string input, DateTime date)
+        {
+            DateTime inputDate;
+            if (!DateTime.TryParse(input, out inputDate))
+                return false;
+
+            return inputDate > date;
+        }
+
+        public static bool IsBefore(string input, DateTime date)
+        {
+            DateTime inputDate;
+            if (!DateTime.TryParse(input, out inputDate))
+                return false;
+
+            return inputDate < date;
+        }
+
         public static bool IsJson(string input)
         {
             try
