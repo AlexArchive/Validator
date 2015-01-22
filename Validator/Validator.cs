@@ -137,5 +137,10 @@ namespace Validator
         {
             return input == null;
         }
+
+        public static bool Contains(string input, string element)
+        {
+            return input.Contains(element);
+        }
     }
 }
