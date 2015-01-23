@@ -231,7 +231,7 @@ namespace Validator.UnitTest
             var actual = Validator.IsJson(input);
             Assert.Equal(expected, actual);
         }
-        
+
         [Theory]
         [InlineData(null, false)]
         [InlineData("", false)]
@@ -303,6 +303,17 @@ namespace Validator.UnitTest
         [InlineData("!@#$%^", false)]
         [InlineData("abc@xyz.com", false)]
         public void IsUrl(string url, bool expected)
+        {
+            var actual = Validator.IsUrl(url);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory(Skip = "Awaiting fix.")]
+        [InlineData("xyz://foobar.com", false)]
+        [InlineData("valid.au", true)]
+        [InlineData("foobar.com/", true)]
+        [InlineData("foobar.com", true)]
+        public void IsUrl2(string url, bool expected)
         {
             var actual = Validator.IsUrl(url);
             Assert.Equal(expected, actual);
