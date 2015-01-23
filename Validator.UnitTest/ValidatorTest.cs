@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 using Xunit.Extensions;
 
 namespace Validator.UnitTest
@@ -117,9 +118,9 @@ namespace Validator.UnitTest
         }
 
         [Theory]
-        [InlineData("Foo", new[] {"Foo", "Bar"}, true)]
-        [InlineData("Bar", new[] {"Foo", "Bar"}, true)]
-        [InlineData("Baz", new[] {"Foo", "Bar"}, false)]
+        [InlineData("Foo", new[] { "Foo", "Bar" }, true)]
+        [InlineData("Bar", new[] { "Foo", "Bar" }, true)]
+        [InlineData("Baz", new[] { "Foo", "Bar" }, false)]
         public void IsIn(string input, string[] values, bool expected)
         {
             var actual = Validator.IsIn(input, values);
@@ -260,6 +261,18 @@ namespace Validator.UnitTest
         }
 
         [Theory]
+        [InlineData("340101319X", true)]
+        [InlineData("9784873113685", true)]
+        [InlineData("3423214121", false)]
+        [InlineData("9783836221190", false)]
+        [InlineData("Foo", false)]
+        public void IsIsbn(string input, bool expected)
+        {
+            var actual = Validator.IsIsbn(input);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
         [InlineData("0596004427", true)]
         [InlineData("0-596-00442-7", true)]
         [InlineData("0 596 00442 7", true)]
@@ -274,8 +287,36 @@ namespace Validator.UnitTest
         [InlineData("Foo", false)]
         public void IsIsbnVersion10(string input, bool expected)
         {
-            var actual = Validator.IsIsbn(input);
+            var actual = Validator.IsIsbn(input, IsbnVersion.Ten);
             Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("9783836221191", true)]
+        [InlineData("978-3-8362-2119-1", true)]
+        [InlineData("978 3 8362 2119 1", true)]
+        [InlineData("9784873113685", true)]
+        [InlineData("978-4-87311-368-5", true)]
+        [InlineData("978 4 87311 368 5", true)]
+        [InlineData("9783836221190", false)]
+        [InlineData("978-3-8362-2119-0", false)]
+        [InlineData("978 3 8362 2119 0", false)]
+        [InlineData("Foo", false)]
+        public void IsIsbnVersion13(string input, bool expected)
+        {
+            var actual = Validator.IsIsbn(input, IsbnVersion.Thirteen);
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void IsIsbnnThrowsWhenSuppliedUnknownVersion()
+        {
+            const int version = 42;
+            var message = Assert.Throws<ArgumentOutOfRangeException>(() => 
+                Validator.IsIsbn("9784873113685", (IsbnVersion)version));
+            Assert.Contains(
+                "Isbn version " + version + " is not supported.", 
+                message.Message);
         }
 
         [Theory]

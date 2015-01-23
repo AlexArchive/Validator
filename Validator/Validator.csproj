@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="IpVersion.cs" />
     <Compile Include="IsBase64.cs" />
+    <Compile Include="IsbnVersion.cs" />
     <Compile Include="IsCreditCard.cs" />
     <Compile Include="IsIsbn.cs" />
     <Compile Include="IsNumeric.cs" />
