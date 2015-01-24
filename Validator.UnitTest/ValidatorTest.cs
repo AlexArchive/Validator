@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Extensions;
 
@@ -118,9 +120,83 @@ namespace Validator.UnitTest
         }
 
         [Theory]
-        [InlineData("Foo", new[] { "Foo", "Bar" }, true)]
-        [InlineData("Bar", new[] { "Foo", "Bar" }, true)]
-        [InlineData("Baz", new[] { "Foo", "Bar" }, false)]
+        [InlineData("ひらがな・カタカナ、．漢字", true)]
+        [InlineData("あいうえお foobar", true)]
+        [InlineData("Foo＠example.com", true)]
+        [InlineData("1234abcDEｘｙｚ", true)]
+        [InlineData("ｶﾀｶﾅ", true)]
+        [InlineData("中文", true)]
+        [InlineData("æøå", true)]
+        [InlineData("abc", false)]
+        [InlineData("abc123", false)]
+        [InlineData("<>@\" *.", false)]
+        public void IsMultibyte(string input, bool expected)
+        {
+            var actual = Validator.IsMultiByte(input);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("!\"#$%&()<>/+=-_? ~^|.,@`{}[]", true)]
+        [InlineData("l-btn_02--active", true)]
+        [InlineData("abc123い", true)]
+        [InlineData("ｶﾀｶﾅﾞﾬ￩", true)]
+        [InlineData("あいうえお", false)]
+        [InlineData("００１１", false)]
+        public void IsHalfWidth(string input, bool expected)
+        {
+            var actual = Validator.IsHalfWidth(input);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("ひらがな・カタカナ、．漢字", true)]
+        [InlineData("３ー０　ａ＠ｃｏｍ", true)]
+        [InlineData("Ｆｶﾀｶﾅﾞﾬ", true)]
+        [InlineData("Good＝Parts", true)]
+        [InlineData("abc", false)]
+        [InlineData("abc123", false)]
+        [InlineData("!\"#$%&()<>/+=-_? ~^|.,@`{}[]", false)]
+        public void IsFullWidth(string input, bool expected)
+        {
+            var actual = Validator.IsFullWidth(input);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("ひらがなカタカナ漢字ABCDE", true)]
+        [InlineData("３ー０123", true)]
+        [InlineData("Ｆｶﾀｶﾅﾞﾬ", true)]
+        [InlineData("Good＝Parts", true)]
+        [InlineData("abc", false)]
+        [InlineData("abc123", false)]
+        [InlineData("!\"#$%&()<>/+=-_? ~^|.,@`{}[]", false)]
+        [InlineData("ひらがな・カタカナ、．漢字", false)]
+        [InlineData("１２３４５６", false)]
+        [InlineData("ｶﾀｶﾅﾞﾬ", false)]
+        public void IsVariableWidth(string input, bool expected)
+        {
+            var actual = Validator.IsVariableWidth(input);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("𠮷野𠮷", true)]
+        [InlineData("𩸽", true)]
+        [InlineData("ABC千𥧄1-2-3", true)]
+        [InlineData("吉野竈", false)]
+        [InlineData("鮪", false)]
+        [InlineData("ABC1-2-3", false)]
+        public void IsSurrogatePair(string input, bool expected)
+        {
+            var actual = Validator.IsSurrogatePair(input);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("Foo", new[] {"Foo", "Bar"}, true)]
+        [InlineData("Bar", new[] {"Foo", "Bar"}, true)]
+        [InlineData("Baz", new[] {"Foo", "Bar"}, false)]
         public void IsIn(string input, string[] values, bool expected)
         {
             var actual = Validator.IsIn(input, values);
@@ -246,6 +322,65 @@ namespace Validator.UnitTest
         public void IsDate(string input, bool expected)
         {
             var actual = Validator.IsDate(input);
+            Assert.Equal(expected, actual);
+        }
+
+        public static IEnumerable IsAfterData
+        {
+            get
+            {
+                return new[]
+                {
+                    new object[] {null, new DateTime(2011, 8, 4), false},
+                    new object[] {"", new DateTime(2011, 8, 4), false},
+
+                    new object[] {"2011-08-04", new DateTime(2011, 8, 3), true},
+                    new object[] {"2011-08-10", new DateTime(2011, 8, 3), true},
+                    new object[] {"2010-07-02", new DateTime(2011, 8, 3), false},
+                    new object[] {"2011-08-03", new DateTime(2011, 8, 3), false},
+
+                    new object[] {"foo", new DateTime(2011, 8, 3), false}
+                };
+            }
+        }
+
+        [Theory]
+        [PropertyData("IsAfterData")]
+        public void IsAfter(string input, DateTime date, bool expected)
+        {
+            var actual = Validator.IsAfter(input, date);
+            Assert.Equal(expected, actual);
+        }
+
+        public static IEnumerable IsBeforeData
+        {
+            get
+            {
+                return new[]
+                {
+                    new object[] {null, new DateTime(2011, 8, 4), false},
+                    new object[] {"", new DateTime(2011, 8, 4), false},
+
+                    new object[] {"2010-07-02", new DateTime(2011, 8, 4), true},
+                    new object[] {"2010-08-04", new DateTime(2011, 8, 4), true},
+                    new object[] {"2011-08-04", new DateTime(2011, 8, 4), false},
+                    new object[] {"2011-09-10", new DateTime(2011, 8, 4), false},
+
+                    new object[] {"2010-07-02", new DateTime(2011, 7, 4), true},
+                    new object[] {"2010-08-04", new DateTime(2011, 7, 4), true},
+                    new object[] {"2011-08-04", new DateTime(2011, 7, 4), false},
+                    new object[] {"2011-09-10", new DateTime(2011, 7, 4), false},
+
+                    new object[] {"foo", new DateTime(2011, 7, 4), false}
+                };
+            }
+        }
+
+        [Theory]
+        [PropertyData("IsBeforeData")]
+        public void IsBefore(string input, DateTime date, bool expected)
+        {
+            var actual = Validator.IsBefore(input, date);
             Assert.Equal(expected, actual);
         }
 
