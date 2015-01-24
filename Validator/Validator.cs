@@ -195,6 +195,10 @@ namespace Validator
             }
             return true;
         }
-        
+
+        public static bool Matches(string input, string pattern)
+        {
+            return Regex.IsMatch(input, pattern);
+        }
     }
 }

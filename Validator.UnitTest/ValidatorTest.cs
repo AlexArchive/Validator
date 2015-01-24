@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Xunit;
 using Xunit.Extensions;
 
@@ -493,6 +494,19 @@ namespace Validator.UnitTest
         {
             var actual = Validator.IsUrl(url);
             Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("Foo", "Foo", true)]
+        [InlineData("Bar", "B.*", true)]
+        [InlineData("Baz", "B.*", true)]
+        [InlineData("bar", "B.*", false)]
+        [InlineData("Foo", "B.*", false)]
+        [InlineData("foo", "Foo", false)]
+        public void Matches(string input, string pattern, bool expected)
+        {
+            var actual = Validator.Matches(input, pattern);
+            Assert.Equal(actual, expected);
         }
     }
 }
