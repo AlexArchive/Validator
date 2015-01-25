@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Xunit;
 using Xunit.Extensions;
@@ -448,10 +447,10 @@ namespace Validator.UnitTest
         public void IsIsbnnThrowsWhenSuppliedUnknownVersion()
         {
             const int version = 42;
-            var message = Assert.Throws<ArgumentOutOfRangeException>(() => 
+            var message = Assert.Throws<ArgumentOutOfRangeException>(() =>
                 Validator.IsIsbn("9784873113685", (IsbnVersion)version));
             Assert.Contains(
-                "Isbn version " + version + " is not supported.", 
+                "Isbn version " + version + " is not supported.",
                 message.Message);
         }
 
@@ -513,13 +512,75 @@ namespace Validator.UnitTest
         [InlineData("Foo", "foo", RegexOptions.IgnoreCase, true)]
         [InlineData("\r\nFoo", "^Foo$", RegexOptions.Multiline, true)]
         public void MatchesWithOptions(
-            string input, 
-            string pattern, 
-            RegexOptions options, 
+            string input,
+            string pattern,
+            RegexOptions options,
             bool expected)
         {
             var actual = Validator.Matches(input, pattern, options);
             Assert.Equal(actual, expected);
+        }
+
+        [Theory]
+        [InlineData("A987FBC9-4BED-3078-CF07-9141BA07C9F3", true)]
+        [InlineData("A987FBC9-4BED-4078-8F07-9141BA07C9F3", true)]
+        [InlineData("A987FBC9-4BED-5078-AF07-9141BA07C9F3", true)]
+        [InlineData("", false)]
+        [InlineData("xxxA987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
+        [InlineData("A987FBC9-4BED-3078-CF07-9141BA07C9F3xxx", false)]
+        [InlineData("A987FBC94BED3078CF079141BA07C9F3", false)]
+        [InlineData("934859", false)]
+        [InlineData("987FBC9-4BED-308-CF07A-9141BA07C9F3", false)]
+        [InlineData("AAAAAAAA-1111-1111-AAAG-111111111111", false)]
+        public void IsUuid(string input, bool expectedValid)
+        {
+            var actual = Validator.IsUuid(input);
+            Assert.Equal(actual, expectedValid);
+        }
+
+        [Theory]
+        [InlineData(3, "A987FBC9-4BED-3078-CF07-9141BA07C9F3", true)]
+
+        [InlineData(3, "", false)]
+        [InlineData(3, "xxxA987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
+        [InlineData(3, "934859", false)]
+        [InlineData(3, "AAAAAAAA-1111-1111-AAAG-111111111111", false)]
+        [InlineData(3, "A987FBC9-4BED-4078-8F07-9141BA07C9F3", false)]
+        [InlineData(3, "A987FBC9-4BED-5078-AF07-9141BA07C9F3", false)]
+
+        [InlineData(4, "713ae7e3-cb32-45f9-adcb-7c4fa86b90c1", true)]
+        [InlineData(4, "625e63f3-58f5-40b7-83a1-a72ad31acffb", true)]
+        [InlineData(4, "57b73598-8764-4ad0-a76a-679bb6640eb1", true)]
+        [InlineData(4, "9c858901-8a57-4791-81fe-4c455b099bc9", true)]
+
+        [InlineData(4, "", false)]
+        [InlineData(4, "xxxA987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
+        [InlineData(4, "934859", false)]
+        [InlineData(4, "AAAAAAAA-1111-1111-AAAG-111111111111", false)]
+        [InlineData(4, "A987FBC9-4BED-5078-AF07-9141BA07C9F3", false)]
+        [InlineData(4, "A987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
+
+        [InlineData(5, "987FBC97-4BED-5078-AF07-9141BA07C9F3", true)]
+        [InlineData(5, "987FBC97-4BED-5078-BF07-9141BA07C9F3", true)]
+        [InlineData(5, "987FBC97-4BED-5078-8F07-9141BA07C9F3", true)]
+        [InlineData(5, "987FBC97-4BED-5078-9F07-9141BA07C9F3", true)]
+
+        [InlineData(5, "", false)]
+        [InlineData(5, "xxxA987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
+        [InlineData(5, "934859", false)]
+        [InlineData(5, "AAAAAAAA-1111-1111-AAAG-111111111111", false)]
+        [InlineData(5, "9c858901-8a57-4791-81fe-4c455b099bc9", false)]
+        [InlineData(5, "A987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
+
+        //Invalid version, expect false
+        [InlineData(0, "A987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
+        [InlineData(1, "A987FBC9-4BED-4078-8F07-9141BA07C9F3", false)]
+        [InlineData(2, "A987FBC9-4BED-5078-AF07-9141BA07C9F3", false)]
+        [InlineData(6, "A987FBC9-4BED-5078-AF07-9141BA07C9F3", false)]
+        public void IsUuidWithVersion(int version, string input, bool expectedValid)
+        {
+            var actual = Validator.IsUuid(version, input);
+            Assert.Equal(actual, expectedValid);
         }
     }
 }
