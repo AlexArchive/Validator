@@ -47,6 +47,7 @@
     <Compile Include="IsbnVersion.cs" />
     <Compile Include="IsCreditCard.cs" />
     <Compile Include="IsIsbn.cs" />
+    <Compile Include="IsMongoId.cs" />
     <Compile Include="IsNumeric.cs" />
     <Compile Include="IsUuid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
