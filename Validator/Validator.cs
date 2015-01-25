@@ -200,5 +200,10 @@ namespace Validator
         {
             return Regex.IsMatch(input, pattern, options);
         }
+
+        public static bool IsMongoId(string input)
+        {
+            return input.Length == 24 && IsHexadecimal(input);
+        }
     }
 }
