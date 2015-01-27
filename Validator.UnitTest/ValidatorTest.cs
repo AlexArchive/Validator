@@ -3,6 +3,7 @@ using System.Collections;
 using System.Text.RegularExpressions;
 using Xunit;
 using Xunit.Extensions;
+using Xunit.Sdk;
 
 namespace Validator.UnitTest
 {
@@ -194,9 +195,9 @@ namespace Validator.UnitTest
         }
 
         [Theory]
-        [InlineData("Foo", new[] {"Foo", "Bar"}, true)]
-        [InlineData("Bar", new[] {"Foo", "Bar"}, true)]
-        [InlineData("Baz", new[] {"Foo", "Bar"}, false)]
+        [InlineData("Foo", new[] { "Foo", "Bar" }, true)]
+        [InlineData("Bar", new[] { "Foo", "Bar" }, true)]
+        [InlineData("Baz", new[] { "Foo", "Bar" }, false)]
         public void IsIn(string input, string[] values, bool expected)
         {
             var actual = Validator.IsIn(input, values);
@@ -600,6 +601,31 @@ namespace Validator.UnitTest
         public void IsMongoId(string input, bool expected)
         {
             var actual = Validator.IsMongoId(input);
+            Assert.Equal(actual, expected);
+        }
+
+        [Theory]
+        [InlineData("Foo", 3, true)]
+        [InlineData("Foo", 2, true)]
+        [InlineData("Foo Bar", 3, true)]
+        [InlineData("Foo", 5, false)]
+        [InlineData("F", 2, false)]
+        [InlineData("", 2, false)]
+        public void IsByteLength(string input, int min, bool expected)
+        {
+            var actual = Validator.IsByteLength(input, min);
+            Assert.Equal(actual, expected);
+        }
+
+        [Theory]
+        [InlineData("Foo", 2, 3, true)]
+        [InlineData("Foo", 3, 5, true)]
+        [InlineData("Foo Bar", 5, 7, true)]
+        [InlineData("Foo", 5, 10, false)]
+        [InlineData("", 2, 3, false)]
+        public void IsByteLengthWithMax(string input, int min, int max, bool expected)
+        {
+            var actual = Validator.IsByteLength(input, min, max);
             Assert.Equal(actual, expected);
         }
     }

@@ -205,5 +205,10 @@ namespace Validator
         {
             return input.Length == 24 && IsHexadecimal(input);
         }
+
+        public static bool IsByteLength(string input, int min, int max = int.MaxValue)
+        {
+            return input.Length >= min && input.Length <= max;
+        }
     }
 }
