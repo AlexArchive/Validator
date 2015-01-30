@@ -628,5 +628,47 @@ namespace Validator.UnitTest
             var actual = Validator.IsByteLength(input, min, max);
             Assert.Equal(actual, expected);
         }
+
+        [Theory]
+        [InlineData("domain.com", true)]
+        [InlineData("dom.plato", true)]
+        [InlineData("a.domain.co", true)]
+        [InlineData("foo--bar.com", true)]
+        [InlineData("xn--froschgrn-x9a.com", true)]
+        [InlineData("rebecca.blackfriday", true)]
+        [InlineData("abc", false)]
+        [InlineData("256.0.0.0", false)]
+        [InlineData("_.com", false)]
+        [InlineData("*.some.com", false)]
+        [InlineData("s!ome.com", false)]
+        [InlineData("domain.com/", false)]
+        [InlineData("/more.com", false)]
+        public void IsFqdn(string input, bool expected)
+        {
+            var actual = Validator.IsFqdn(input);
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public void IsFqdnWithTrailingDotOption()
+        {
+            var actual = Validator.IsFqdn("example.com.", allowTrailingDot: true);
+            Assert.True(actual);
+        }
+        [Fact]
+        public void IsFqdnWithUnderscoreOption()
+        {
+            var actual = Validator.IsFqdn("test_.com", allowUnderscore: true);
+            Assert.True(actual);
+        }
+
+        [Theory]
+        [InlineData("example")]
+        [InlineData("input")]
+        public void IsFqdnWithoutRequireTldOption(string input)
+        {
+            var actual = Validator.IsFqdn(input, requireTld: false);
+            Assert.True(actual);
+        }
     }
 }
