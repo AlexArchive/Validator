@@ -18,18 +18,24 @@ namespace Validator
             input = SanetizeInput(input);
 
             //Base64 values must be a multiple of 4 characters.
-            if (input.Length == 0 || input.Length % 4 != 0)
+            if (input.Length == 0 || input.Length%4 != 0)
+            {
                 return false;
+            }
 
             //Padding must be 0, 1 or 2 '=' characters.
             string valueWithoutPadding = input.TrimEnd(paddingCharacter);
             if (input.Length - valueWithoutPadding.Length > 2)
+            {
                 return false;
+            }
 
             //If the given input contains a input not present in
             //the hashset it cannot be a valid Base64 string.
             if (valueWithoutPadding.All(c => base64Characters.Contains(c) != false))
+            {
                 return true;
+            }
 
             return false;
         }

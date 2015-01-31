@@ -148,8 +148,9 @@ namespace Validator
         {
             DateTime inputDate;
             if (!DateTime.TryParse(input, out inputDate))
+            {
                 return false;
-
+            }
             return inputDate > date;
         }
 
@@ -157,7 +158,9 @@ namespace Validator
         {
             DateTime inputDate;
             if (!DateTime.TryParse(input, out inputDate))
+            {
                 return false;
+            }
 
             return inputDate < date;
         }
