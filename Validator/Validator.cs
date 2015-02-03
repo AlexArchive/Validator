@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
@@ -114,7 +115,14 @@ namespace Validator
 
         public static bool IsEmail(string input)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return new MailAddress(input).Address == input;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public static bool IsHexadecimal(string input)
