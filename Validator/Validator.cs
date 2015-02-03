@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -115,7 +114,7 @@ namespace Validator
 
         public static bool IsEmail(string input)
         {
-            return new EmailAddressAttribute().IsValid(input);
+            throw new NotImplementedException();
         }
 
         public static bool IsHexadecimal(string input)
