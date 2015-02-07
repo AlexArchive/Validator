@@ -485,7 +485,7 @@ namespace Validator.UnitTest
             Assert.Equal(expected, actual);
         }
 
-        [Theory(Skip = "Awaiting fix.")]
+        [Theory]
         [InlineData("xyz://foobar.com", false)]
         [InlineData("valid.au", true)]
         [InlineData("foobar.com/", true)]

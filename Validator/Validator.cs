@@ -186,16 +186,6 @@ namespace Validator
             return input.Contains(element);
         }
 
-        public static bool IsUrl(string url)
-        {
-            Uri uri = null;
-            if (!Uri.TryCreate(url, UriKind.Absolute, out uri) || null == uri)
-            {
-                return false; //Invalid URL
-            }
-            return true;
-        }
-
         public static bool Matches(string input, string pattern, RegexOptions options = RegexOptions.None)
         {
             return Regex.IsMatch(input, pattern, options);

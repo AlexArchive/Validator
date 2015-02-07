@@ -50,6 +50,7 @@
     <Compile Include="IsIsbn.cs" />
     <Compile Include="IsMobilePhone.cs" />
     <Compile Include="IsNumeric.cs" />
+    <Compile Include="IsUrl.cs" />
     <Compile Include="IsUuid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UuidVersion.cs" />
