@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -86,6 +87,12 @@ namespace Validator
 			}
 		}
 
+		private struct CheckOutput
+		{
+			public bool IsValid;
+			public string NewUrl;
+		}
+
 		public static bool IsUrl(string url, UrlOptions options = null)
 		{
 			options = options ?? new UrlOptions();
@@ -95,132 +102,119 @@ namespace Validator
 				return false;
 			}
 
-			var newUrl = string.Empty;
-
-			// parallelize!
-			if (!CheckProtocol(url, options, out newUrl))
+			var output = new CheckOutput();
+			var checkFunctions = new List<Func<string, UrlOptions, CheckOutput>>
 			{
-				return false;
+				CheckProtocol,
+				CheckHash,
+				CheckQueryString,
+				CheckPath,
+				CheckAuth,
+				CheckHost
+			};
+
+			foreach (var f in checkFunctions)
+			{
+				output = f(url, options);
+				if (!output.IsValid)
+				{
+					break;
+				}
+				url = output.NewUrl;
 			}
 
-			url = newUrl;
-
-			//remove #...
-			if (!CheckHash(url, options, out newUrl))
-			{
-				return false;
-			}
-
-			url = newUrl;
-
-			//remove ?...
-			if (!CheckQueryString(url, options, out newUrl))
-			{
-				return false;
-			}
-
-			url = newUrl;
-
-			//remove /...
-			if (!CheckPath(url, options, out newUrl))
-			{
-				return false;
-			}
-
-			url = newUrl;
-
-			if (!CheckAuth(url, options, out newUrl))
-			{
-				return false;
-			}
-
-			url = newUrl;
-
-			if (!CheckHost(url, options, out newUrl))
-			{
-				return false;
-			}
-
-			return true;
+			return output.IsValid;
 		}
 
-		private static bool CheckProtocol(string url, UrlOptions options, out string modifiedUrl)
+		private static CheckOutput CheckProtocol(string url, UrlOptions options)
 		{
+			var output = new CheckOutput();
 			var protocolEndIndex = url.IndexOf("://", StringComparison.InvariantCultureIgnoreCase);
 			if (protocolEndIndex > -1)
 			{
 				var protocol = url.Substring(0, protocolEndIndex);
 				// this is not a one character indexof, so need to account for all three character we were looking for
-				modifiedUrl = url.Substring(protocolEndIndex + 3);
-				return options.Protocols.Contains(protocol);
+				output.NewUrl = url.Substring(protocolEndIndex + 3);
+				output.IsValid = options.Protocols.Contains(protocol);
 			}
 			else
 			{
-				modifiedUrl = url;
-				return !options.RequireProtocol;
+				output.NewUrl = url;
+				output.IsValid = !options.RequireProtocol;
 			}
+
+			return output;
 		}
 
-		private static bool CheckHash(string url, UrlOptions options, out string modifiedUrl)
+		private static CheckOutput CheckHash(string url, UrlOptions options)
 		{
+			var output = new CheckOutput();
 			var hashIndex = url.IndexOf("#", StringComparison.InvariantCultureIgnoreCase);
 			if (hashIndex > -1)
 			{
 				var hashValue = url.Substring(hashIndex + 1);
-				modifiedUrl = url.Substring(0, hashIndex);
-				return !string.IsNullOrWhiteSpace(hashValue);
+				output.NewUrl = url.Substring(0, hashIndex);
+				output.IsValid = !string.IsNullOrWhiteSpace(hashValue);
 			}
 			else
 			{
-				modifiedUrl = url;
-				return true;
+				output.NewUrl = url;
+				output.IsValid = true;
 			}
+
+			return output;
 		}
 
-		private static bool CheckQueryString(string url, UrlOptions options, out string modifiedUrl)
+		private static CheckOutput CheckQueryString(string url, UrlOptions options)
 		{
+			var output = new CheckOutput();
 			var queryStringIndex = url.IndexOf("?", StringComparison.InvariantCultureIgnoreCase);
 			if (queryStringIndex > -1)
 			{
 				var queryStringValue = url.Substring(queryStringIndex + 1);
-				modifiedUrl = url.Substring(0, queryStringIndex);
-				return !string.IsNullOrWhiteSpace(queryStringValue);
+				output.NewUrl = url.Substring(0, queryStringIndex);
+				output.IsValid = !string.IsNullOrWhiteSpace(queryStringValue);
 			}
 			else
 			{
-				modifiedUrl = url;
-				return true;
+				output.NewUrl = url;
+				output.IsValid = true;
 			}
+
+			return output;
 		}
 
-		private static bool CheckPath(string url, UrlOptions options, out string modifiedUrl)
+		private static CheckOutput CheckPath(string url, UrlOptions options)
 		{
+			var output = new CheckOutput();
 			var pathIndex = url.IndexOf("/", StringComparison.InvariantCultureIgnoreCase);
 			if (pathIndex > -1)
 			{
 				var queryStringValue = url.Substring(pathIndex + 1);
-				modifiedUrl = url.Substring(0, pathIndex);
+				output.NewUrl = url.Substring(0, pathIndex);
 				if (string.IsNullOrEmpty(queryStringValue))
 				{
-					return true;
+					output.IsValid = true;
 				}
 				else
 				{
-					return !queryStringValue.Contains(" ");
+					output.IsValid = !queryStringValue.Contains(" ");
 				}
-				//return !string.IsNullOrWhiteSpace(queryStringValue);
 			}
 			else
 			{
-				modifiedUrl = url;
-				return true;
+				output.NewUrl = url;
+				output.IsValid = true;
 			}
+
+			return output;
 		}
 
-		private static bool CheckAuth(string url, UrlOptions options, out string modifiedUrl)
+		private static CheckOutput CheckAuth(string url, UrlOptions options)
 		{
+			var output = new CheckOutput();
 			var authIndex = url.IndexOf("@", StringComparison.InvariantCultureIgnoreCase);
-			modifiedUrl = url;
+			output.NewUrl = url;
 			if (authIndex > -1)
 			{
 				var authValue = url.Substring(0, authIndex);
@@ -229,18 +223,24 @@ namespace Validator
 				{
 					var user = authValue.Substring(0, colonIndex);
 					var pass = authValue.Substring(colonIndex + 1);
-					return !string.IsNullOrWhiteSpace(user) && !string.IsNullOrWhiteSpace(pass);
+					output.IsValid = !string.IsNullOrWhiteSpace(user) && !string.IsNullOrWhiteSpace(pass);
 				}
-				return true;
+				else
+				{
+					output.IsValid = true;	
+				}
 			}
 			else
 			{
-				return true;
+				output.IsValid = true;
 			}
+
+			return output;
 		}
 
-		private static bool CheckHost(string url, UrlOptions options, out string modifiedUrl)
+		private static CheckOutput CheckHost(string url, UrlOptions options)
 		{
+			var output = new CheckOutput();
 			var atIndex = url.IndexOf("@", StringComparison.InvariantCultureIgnoreCase);
 			//if atIndex is -1, then we'll just get the whole substring
 			var hostName = url.Substring(atIndex+1);
@@ -248,7 +248,7 @@ namespace Validator
 			var host = string.Empty;
 
 			// don't care about modifiedUrl here
-			modifiedUrl = url;
+			output.NewUrl = url;
 
 			if (colonIndex == -1)
 			{
@@ -261,7 +261,8 @@ namespace Validator
 				Int32.TryParse(hostName.Substring(colonIndex + 1), out port);
 				if (port <= 0 || port > 65535)
 				{
-					return false;
+					output.IsValid = false;
+					return output;
 				}
 			}
 
@@ -271,20 +272,24 @@ namespace Validator
 			if (!isIp && !isFqdn &&
 			    !string.Equals(host, "localhost", StringComparison.InvariantCultureIgnoreCase))
 			{
-				return false;
+				output.IsValid = false;
+				return output;
 			}
 
 			if (options.HostWhitelist != null && !options.HostWhitelist.Contains(host))
 			{
-				return false;
+				output.IsValid = false;
+				return output;
 			}
 
 			if (options.HostBlacklist != null && !options.HostBlacklist.Contains(host))
 			{
-				return false;
+				output.IsValid = false;
+				return output;
 			}
 
-			return true;
+			output.IsValid = true;
+			return output;
 		}
 	}
 }
