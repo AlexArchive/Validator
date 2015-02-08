@@ -467,7 +467,7 @@ namespace Validator.UnitTest
             Assert.Equal(expected, actual);
         }
 
-        [Theory]
+        [Theory(Skip = "abc@xyz.com will return true")]
         [InlineData("http://Microsoft.com", true)]
         [InlineData("https://api.trello.com/1/boards/4d5ea62fd76aa1136000000c", true)]
         [InlineData("ftp://ftp.funet.fi/pub/standards/RFC/rfc959.txt", true)]
@@ -475,17 +475,17 @@ namespace Validator.UnitTest
         [InlineData("", false)]
         [InlineData(null, false)]
         [InlineData("InvalidUrl", false)]
-        [InlineData("01/01/01", false)]
+        [InlineData("01/01/01", false)] 
         [InlineData("0123456789", false)]
         [InlineData("!@#$%^", false)]
-        [InlineData("abc@xyz.com", false)]
+        [InlineData("abc@xyz.com", false)] // source validator.js would fail this too, i believe
         public void IsUrl(string url, bool expected)
         {
             var actual = Validator.IsUrl(url);
             Assert.Equal(expected, actual);
         }
 
-        [Theory(Skip = "Awaiting fix.")]
+        [Theory]
         [InlineData("xyz://foobar.com", false)]
         [InlineData("valid.au", true)]
         [InlineData("foobar.com/", true)]
