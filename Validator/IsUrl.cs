@@ -112,7 +112,7 @@ namespace Validator
 		{
 			options = options ?? new UrlOptions();
 
-			if (string.IsNullOrWhiteSpace(url) || url.Length >= 2083 || url.StartsWith("mailto:", StringComparison.InvariantCultureIgnoreCase))
+			if (string.IsNullOrEmpty(url) || url.Length >= 2083 || url.StartsWith("mailto:", StringComparison.InvariantCultureIgnoreCase))
 			{
 				return false;
 			}
@@ -185,7 +185,7 @@ namespace Validator
 			{
 				var hashValue = url.Substring(hashIndex + 1);
 				output.NewUrl = url.Substring(0, hashIndex);
-				output.IsValid = !string.IsNullOrWhiteSpace(hashValue);
+				output.IsValid = !string.IsNullOrEmpty(hashValue);
 			}
 			else
 			{
@@ -210,7 +210,7 @@ namespace Validator
 			{
 				var queryStringValue = url.Substring(queryStringIndex + 1);
 				output.NewUrl = url.Substring(0, queryStringIndex);
-				output.IsValid = !string.IsNullOrWhiteSpace(queryStringValue);
+				output.IsValid = !string.IsNullOrEmpty(queryStringValue);
 			}
 			else
 			{
