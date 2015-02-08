@@ -87,12 +87,27 @@ namespace Validator
 			}
 		}
 
+		/// <summary>
+		/// Struct to hold the two pieces of data needed for each Url check sub-function.
+		/// </summary>
 		private struct CheckOutput
 		{
+			/// <summary>
+			/// Whether or not the prospective Url met the criteria for the given function.
+			/// </summary>
 			public bool IsValid;
+			/// <summary>
+			/// The modified Url to use from this point forward.
+			/// </summary>
 			public string NewUrl;
 		}
 
+		/// <summary>
+		/// Determines whether the given string value, <paramref name="url"/>, qualifies as a Url.
+		/// </summary>
+		/// <param name="url">Value to check.</param>
+		/// <param name="options">Options to consider.</param>
+		/// <returns>True if a Url, false otherwise.</returns>
 		public static bool IsUrl(string url, UrlOptions options = null)
 		{
 			options = options ?? new UrlOptions();
@@ -103,6 +118,7 @@ namespace Validator
 			}
 
 			var output = new CheckOutput();
+			// i purposely structured each of these "check" methods the same way so this list of Funcs works.
 			var checkFunctions = new List<Func<string, UrlOptions, CheckOutput>>
 			{
 				CheckProtocol,
@@ -113,6 +129,9 @@ namespace Validator
 				CheckHost
 			};
 
+			// Mimicking the source validator.js means we are monkeying with the url value in many of these functions
+			// as we trim down the url string to verify. In other words, most of these methods remove the portion of the string that they validate
+			// only leaving behind that which has yet to be validated.
 			foreach (var f in checkFunctions)
 			{
 				output = f(url, options);
@@ -126,6 +145,12 @@ namespace Validator
 			return output.IsValid;
 		}
 
+		/// <summary>
+		/// Checks the url string for protocol violations.
+		/// </summary>
+		/// <param name="url">The url to check.</param>
+		/// <param name="options">The options to consider. Specifically, this will conditionally check the RequireProtocol option.</param>
+		/// <returns>True if it meets the protocol standards, false otherwise.</returns>
 		private static CheckOutput CheckProtocol(string url, UrlOptions options)
 		{
 			var output = new CheckOutput();
@@ -146,6 +171,12 @@ namespace Validator
 			return output;
 		}
 
+		/// <summary>
+		/// Checks the url string for hash violations.
+		/// </summary>
+		/// <param name="url">The url to check.</param>
+		/// <param name="options">The options to consider. Ignored.</param>
+		/// <returns>True if it meets the hash standards, false otherwise.</returns>
 		private static CheckOutput CheckHash(string url, UrlOptions options)
 		{
 			var output = new CheckOutput();
@@ -165,6 +196,12 @@ namespace Validator
 			return output;
 		}
 
+		/// <summary>
+		/// Checks the url string for query string violations.
+		/// </summary>
+		/// <param name="url">The url to check.</param>
+		/// <param name="options">The options to consider. Ignored.</param>
+		/// <returns>True if it meets the query string standards, false otherwise.</returns>
 		private static CheckOutput CheckQueryString(string url, UrlOptions options)
 		{
 			var output = new CheckOutput();
@@ -184,6 +221,12 @@ namespace Validator
 			return output;
 		}
 
+		/// <summary>
+		/// Checks the url string for path violations.
+		/// </summary>
+		/// <param name="url">The url to check.</param>
+		/// <param name="options">The options to consider. Ignored.</param>
+		/// <returns>True if it meets the path standards, false otherwise.</returns>
 		private static CheckOutput CheckPath(string url, UrlOptions options)
 		{
 			var output = new CheckOutput();
@@ -210,6 +253,12 @@ namespace Validator
 			return output;
 		}
 
+		/// <summary>
+		/// Checks the url string for authentication violations.
+		/// </summary>
+		/// <param name="url">The url to check.</param>
+		/// <param name="options">The options to consider. Ignored.</param>
+		/// <returns>True if it meets the authorization standards, false otherwise.</returns>
 		private static CheckOutput CheckAuth(string url, UrlOptions options)
 		{
 			var output = new CheckOutput();
@@ -223,7 +272,7 @@ namespace Validator
 				{
 					var user = authValue.Substring(0, colonIndex);
 					var pass = authValue.Substring(colonIndex + 1);
-					output.IsValid = !string.IsNullOrWhiteSpace(user) && !string.IsNullOrWhiteSpace(pass);
+					output.IsValid = !string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(pass);
 				}
 				else
 				{
@@ -238,6 +287,12 @@ namespace Validator
 			return output;
 		}
 
+		/// <summary>
+		/// Checks the url string for host violations.
+		/// </summary>
+		/// <param name="url">The url to check.</param>
+		/// <param name="options">The options to consider. Specifically, it will check white and blaclist entries, if available.</param>
+		/// <returns>True if it meets the host standards, false otherwise.</returns>
 		private static CheckOutput CheckHost(string url, UrlOptions options)
 		{
 			var output = new CheckOutput();
@@ -247,8 +302,8 @@ namespace Validator
 			var colonIndex = hostName.IndexOf(":", StringComparison.InvariantCultureIgnoreCase);
 			var host = string.Empty;
 
-			// don't care about modifiedUrl here
-			output.NewUrl = url;
+			// don't care about modifiedUrl here since this is the last method and there's nothing left to check.
+			output.NewUrl = string.Empty;
 
 			if (colonIndex == -1)
 			{
@@ -266,6 +321,7 @@ namespace Validator
 				}
 			}
 
+			// broke these out from the below if statement simply for readability
 			var isIp = Validator.IsIp(host, IpVersion.Four) || Validator.IsIp(host, IpVersion.Six);
 			var isFqdn = Validator.IsFqdn(host);
 
