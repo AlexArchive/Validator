@@ -11,9 +11,9 @@ namespace Validator
 			{ "en-ZA", new Regex(@"^(\+?27|0)(\d{9})$", RegexOptions.Compiled) },
 			{ "en-AU", new Regex(@"^(\+?61|0)4(\d{8})$", RegexOptions.Compiled) }, 
 			{ "fr-FR", new Regex(@"^(\+?33|0)(6|7)\d{8}$", RegexOptions.Compiled) },
-            { "en-HK", new Regex(@"^(\+?852\-?)?[569]\d{3}\-?\d{4}$", RegexOptions.Compiled) },
-            { "pt-PT", new Regex(@"^(\+351)?9[1236]\d{7}$", RegexOptions.Compiled) }, 
-            { "el-GR", new Regex(@"^(\+30)?((2\d{9})|(69\d{8}))$", RegexOptions.Compiled) }
+			{ "en-HK", new Regex(@"^(\+?852\-?)?[569]\d{3}\-?\d{4}$", RegexOptions.Compiled) },
+			{ "pt-PT", new Regex(@"^(\+351)?9[1236]\d{7}$", RegexOptions.Compiled) }, 
+			{ "el-GR", new Regex(@"^(\+30)?((2\d{9})|(69\d{8}))$", RegexOptions.Compiled) }
 		};
 		
 		/// <summary>
