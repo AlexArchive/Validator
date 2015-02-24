@@ -762,6 +762,6 @@ namespace Validator.UnitTest
 		{
 			var actual = Validator.IsMobilePhone(phoneNumber, locale);
 			Assert.Equal(expected, actual);
-		}
+		} 
     }
 }
