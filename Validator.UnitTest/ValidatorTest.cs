@@ -758,7 +758,6 @@ namespace Validator.UnitTest
 
         // Lack of test data in original Validator.js.
         [InlineData("+351919706735", "pt-PT", true)]
-
 		public void IsMobilePhone(string phoneNumber, string locale, bool expected)
 		{
 			var actual = Validator.IsMobilePhone(phoneNumber, locale);
