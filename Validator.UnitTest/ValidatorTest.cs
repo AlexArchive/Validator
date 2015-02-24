@@ -730,6 +730,35 @@ namespace Validator.UnitTest
 		[InlineData("+34612457898", "fr-FR", false)]
 		[InlineData("+336124578980", "fr-FR", false)]
 		[InlineData("+3361245789", "fr-FR", false)]
+
+        [InlineData("2102323234", "el-GR", true)]
+        [InlineData("+302646041461", "el-GR", true)]
+        [InlineData("+306944848966", "el-GR", true)]
+        [InlineData("6944848966", "el-GR", true)]
+
+        [InlineData("120000000", "el-GR", false)]
+        [InlineData("20000000000", "el-GR", false)]
+        [InlineData("68129485729", "el-GR", false)]
+        [InlineData("6589394827", "el-GR", false)]
+        [InlineData("298RI89572", "el-GR", false)]
+
+        [InlineData("91234567", "en-HK", true)]
+        [InlineData("9123-4567", "en-HK", true)]
+        [InlineData("61234567", "en-HK", true)]
+        [InlineData("51234567", "en-HK", true)]
+        [InlineData("+85291234567", "en-HK", true)]
+        [InlineData("+852-91234567", "en-HK", true)]
+        [InlineData("+852-9123-4567", "en-HK", true)]
+        [InlineData("852-91234567", "en-HK", true)]
+
+        [InlineData("999", "en-HK", false)]
+        [InlineData("+852-912345678", "en-HK", false)]
+        [InlineData("123456789", "en-HK", false)]
+        [InlineData("+852-1234-56789", "en-HK", false)]
+
+        // Lack of test data in original Validator.js.
+        [InlineData("+351919706735", "pt-PT", true)]
+
 		public void IsMobilePhone(string phoneNumber, string locale, bool expected)
 		{
 			var actual = Validator.IsMobilePhone(phoneNumber, locale);
