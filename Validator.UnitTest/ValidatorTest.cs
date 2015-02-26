@@ -475,7 +475,7 @@ namespace Validator.UnitTest
         [InlineData("", false)]
         [InlineData(null, false)]
         [InlineData("InvalidUrl", false)]
-        [InlineData("01/01/01", false)] 
+        [InlineData("01/01/01", false)]
         [InlineData("0123456789", false)]
         [InlineData("!@#$%^", false)]
         [InlineData("abc@xyz.com", false)] // source validator.js would fail this too, i believe
@@ -671,65 +671,65 @@ namespace Validator.UnitTest
             Assert.True(actual);
         }
 
-		//copied from https://github.com/chriso/validator.js/blob/master/test/validators.js
-		[Theory]
-		[InlineData("15323456787", "zh-CN", true)]
-		[InlineData("13523333233", "zh-CN", true)]
-		[InlineData("13898728332", "zh-CN", true)]
-		[InlineData("+086-13238234822", "zh-CN", true)]
-		[InlineData("08613487234567", "zh-CN", true)]
-		[InlineData("8617823492338", "zh-CN", true)]
-		[InlineData("86-17823492338", "zh-CN", true)]
-		[InlineData("12345", "zh-CN", false)]
-		[InlineData("", "zh-CN", false)]
-		[InlineData("Vml2YW11cyBmZXJtZtesting123", "zh-CN", false)]
-		[InlineData("010-38238383", "zh-CN", false)]
+        //copied from https://github.com/chriso/validator.js/blob/master/test/validators.js
+        [Theory]
+        [InlineData("15323456787", "zh-CN", true)]
+        [InlineData("13523333233", "zh-CN", true)]
+        [InlineData("13898728332", "zh-CN", true)]
+        [InlineData("+086-13238234822", "zh-CN", true)]
+        [InlineData("08613487234567", "zh-CN", true)]
+        [InlineData("8617823492338", "zh-CN", true)]
+        [InlineData("86-17823492338", "zh-CN", true)]
+        [InlineData("12345", "zh-CN", false)]
+        [InlineData("", "zh-CN", false)]
+        [InlineData("Vml2YW11cyBmZXJtZtesting123", "zh-CN", false)]
+        [InlineData("010-38238383", "zh-CN", false)]
 
-		[InlineData("15323456787", "en", false)]
-		[InlineData("13523333233", "en", false)]
-		[InlineData("13898728332", "en", false)]
-		[InlineData("+086-13238234822", "en", false)]
-		[InlineData("08613487234567", "en", false)]
-		[InlineData("8617823492338", "en", false)]
-		[InlineData("86-17823492338", "en", false)]
+        [InlineData("15323456787", "en", false)]
+        [InlineData("13523333233", "en", false)]
+        [InlineData("13898728332", "en", false)]
+        [InlineData("+086-13238234822", "en", false)]
+        [InlineData("08613487234567", "en", false)]
+        [InlineData("8617823492338", "en", false)]
+        [InlineData("86-17823492338", "en", false)]
 
-		[InlineData("0821231234", "en-ZA", true)]
-		[InlineData("+27821231234", "en-ZA", true)]
-		[InlineData("27821231234", "en-ZA", true)]
-		[InlineData("082123", "en-ZA", false)]
-		[InlineData("08212312345", "en-ZA", false)]
-		[InlineData("21821231234", "en-ZA", false)]
-		[InlineData("+21821231234", "en-ZA", false)]
-		[InlineData("+0821231234", "en-ZA", false)]
+        [InlineData("0821231234", "en-ZA", true)]
+        [InlineData("+27821231234", "en-ZA", true)]
+        [InlineData("27821231234", "en-ZA", true)]
+        [InlineData("082123", "en-ZA", false)]
+        [InlineData("08212312345", "en-ZA", false)]
+        [InlineData("21821231234", "en-ZA", false)]
+        [InlineData("+21821231234", "en-ZA", false)]
+        [InlineData("+0821231234", "en-ZA", false)]
 
-		[InlineData("61404111222", "en-AU", true)]
-		[InlineData("+61411222333", "en-AU", true)]
-		[InlineData("0417123456", "en-AU", true)]
-		[InlineData("082123", "en-AU", false)]
-		[InlineData("08212312345", "en-AU", false)]
-		[InlineData("21821231234", "en-AU", false)]
-		[InlineData("+21821231234", "en-AU", false)]
-		[InlineData("+0821231234", "en-AU", false)]
+        [InlineData("61404111222", "en-AU", true)]
+        [InlineData("+61411222333", "en-AU", true)]
+        [InlineData("0417123456", "en-AU", true)]
+        [InlineData("082123", "en-AU", false)]
+        [InlineData("08212312345", "en-AU", false)]
+        [InlineData("21821231234", "en-AU", false)]
+        [InlineData("+21821231234", "en-AU", false)]
+        [InlineData("+0821231234", "en-AU", false)]
 
-		[InlineData("0612457898", "fr-FR", true)]
-		[InlineData("+33612457898", "fr-FR", true)]
-		[InlineData("33612457898", "fr-FR", true)]
-		[InlineData("0712457898", "fr-FR", true)]
-		[InlineData("+33712457898", "fr-FR", true)]
-		[InlineData("33712457898", "fr-FR", true)]
+        [InlineData("0612457898", "fr-FR", true)]
+        [InlineData("+33612457898", "fr-FR", true)]
+        [InlineData("33612457898", "fr-FR", true)]
+        [InlineData("0712457898", "fr-FR", true)]
+        [InlineData("+33712457898", "fr-FR", true)]
+        [InlineData("33712457898", "fr-FR", true)]
 
-		[InlineData("061245789", "fr-FR", false)]
-		[InlineData("06124578980", "fr-FR", false)]
-		[InlineData("0112457898", "fr-FR", false)]
-		[InlineData("0212457898", "fr-FR", false)]
-		[InlineData("0312457898", "fr-FR", false)]
-		[InlineData("0412457898", "fr-FR", false)]
-		[InlineData("0512457898", "fr-FR", false)]
-		[InlineData("0812457898", "fr-FR", false)]
-		[InlineData("0912457898", "fr-FR", false)]
-		[InlineData("+34612457898", "fr-FR", false)]
-		[InlineData("+336124578980", "fr-FR", false)]
-		[InlineData("+3361245789", "fr-FR", false)]
+        [InlineData("061245789", "fr-FR", false)]
+        [InlineData("06124578980", "fr-FR", false)]
+        [InlineData("0112457898", "fr-FR", false)]
+        [InlineData("0212457898", "fr-FR", false)]
+        [InlineData("0312457898", "fr-FR", false)]
+        [InlineData("0412457898", "fr-FR", false)]
+        [InlineData("0512457898", "fr-FR", false)]
+        [InlineData("0812457898", "fr-FR", false)]
+        [InlineData("0912457898", "fr-FR", false)]
+        [InlineData("+34612457898", "fr-FR", false)]
+        [InlineData("+336124578980", "fr-FR", false)]
+        [InlineData("+3361245789", "fr-FR", false)]
 
         [InlineData("2102323234", "el-GR", true)]
         [InlineData("+302646041461", "el-GR", true)]
@@ -759,10 +759,10 @@ namespace Validator.UnitTest
         // Lack of test data in original Validator.js.
         [InlineData("+351919706735", "pt-PT", true)]
 
-		public void IsMobilePhone(string phoneNumber, string locale, bool expected)
-		{
-			var actual = Validator.IsMobilePhone(phoneNumber, locale);
-			Assert.Equal(expected, actual);
-		}
+        public void IsMobilePhone(string phoneNumber, string locale, bool expected)
+        {
+            var actual = Validator.IsMobilePhone(phoneNumber, locale);
+            Assert.Equal(expected, actual);
+        }
     }
 }
