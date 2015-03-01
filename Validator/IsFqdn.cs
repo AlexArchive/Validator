@@ -47,7 +47,7 @@ namespace Validator
                 {
                     return false;
                 }
-                if (copy[0] == '-' || copy.EndsWith("--") || copy.Contains("---"))
+                if (copy[0] == '-' || copy.EndsWith("-") || copy.Contains("---"))
                 {
                     return false;
                 }
