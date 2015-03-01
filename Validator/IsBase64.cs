@@ -13,12 +13,17 @@ namespace Validator
             '6', '7', '8', '9', '+', '/', 
         };
 
+        /// <summary>
+        /// Indicates whether string is in base 64.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static bool IsBase64(string input)
         {
             input = SanetizeInput(input);
 
             //Base64 values must be a multiple of 4 characters.
-            if (input.Length == 0 || input.Length % 4 != 0)
+            if (input.Length == 0 || input.Length%4 != 0)
             {
                 return false;
             }
@@ -40,6 +45,11 @@ namespace Validator
             return false;
         }
 
+        /// <summary>
+        /// Remove any occurrences of carriage returns and newlines, before forcing all letters to lowercase.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         private static string SanetizeInput(string value)
         {
             return value.Replace("\r", string.Empty).Replace("\n", string.Empty).ToLower();
