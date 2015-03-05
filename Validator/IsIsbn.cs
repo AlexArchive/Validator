@@ -5,6 +5,13 @@ namespace Validator
 {
     public partial class Validator
     {
+        /// <summary>
+        /// Indicates whether supplied input is either in ISBN-10 digit format or ISBN-13 digit format.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="version">Valid options are: IsbnVersion.Ten, IsbnVersion.Thirteen or IsbnVersion.Any</param>
+        /// <returns></returns>
+        /// IsbnVersion
         public static bool IsIsbn(string input, IsbnVersion version = IsbnVersion.Any)
         {
             input = RemoveSpacesAndHyphens(input);
@@ -22,6 +29,11 @@ namespace Validator
                 string.Format("Isbn version {0} is not supported.", version));
         }
 
+        /// <summary>
+        /// Indicates whether supplied input is in ISBN 13 digit format.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         private static bool IsIsbn13(string input)
         {
             var checksum = 0;
@@ -38,6 +50,11 @@ namespace Validator
             return int.Parse(input[12].ToString()) - ((10 - (checksum % 10)) % 10) == 0;
         }
 
+        /// <summary>
+        /// Indicates whether supplied input is in ISBN 10 digit format.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         private static bool IsIsbn10(string input)
         {
             var checksum = 0;
@@ -64,6 +81,11 @@ namespace Validator
             return checksum % 11 == 0;
         }
 
+        /// <summary>
+        /// Remove all white-space and hyphen characters from input.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         private static string RemoveSpacesAndHyphens(string input)
         {
             return Regex.Replace(input, "[\\s-]+", "");

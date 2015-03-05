@@ -10,6 +10,12 @@ namespace Validator
         private const string V4Regex = "^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$";
         private const string V5Regex = "^[0-9A-F]{8}-[0-9A-F]{4}-5[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$";
 
+        /// <summary>
+        /// Determine whether input is a valid Universal Unique Identifier.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="version">Valid options are: UuidVersion.Any, UuidVersion.Three, UuidVersion.Four or UuidVersion.Five</param>
+        /// <returns></returns>
         public static bool IsUuid(string input, UuidVersion version = UuidVersion.Any)
         {
             switch (version)
