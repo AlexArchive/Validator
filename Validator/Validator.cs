@@ -347,5 +347,55 @@ namespace Validator
         {
             return input.Length >= min && input.Length <= max;
         }
+
+
+        /// <summary>       
+        ///Mange Exceptions by adding messages or literals return  
+        ///by the program and easily understood by the user instead of using "return false"
+        ///
+        ///Below is method that checks if a string contains a decimal value
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+
+        public bool Isdecimal(string input)
+        {
+            int decimalCount = 0;
+            bool ValidDecimal = true;
+            foreach (char c in input)
+            {
+                if (!(
+                        c == '0' || c == '1' || c == '2' ||
+                        c == '3' || c == '4' || c == '5' ||
+                        c == '6' || c == '7' || c == '8' ||
+                        c == '9' || c == '.' ||
+                        c == '$' || c == '%' || c == ',' ||
+                        c == ' '
+                    ))
+                {
+                    ValidDecimal = false;
+                    break;
+                }
+                if (c == '.')
+                {
+                    decimalCount++;
+                }
+            }
+            if (ValidDecimal && decimalCount <= 1)
+            {
+                return true;
+            }
+            else
+            {
+                throw new Exception(input + "must be a decimal value.");
+
+                ///if you are working with UI like winforms,it may be better to implement the code below instead of the throw Exception;
+                ///
+                ///   Message.Show (input + "must be a decimal value.","Entry Error");
+                ///   textBox.Focus();
+                ///   return false;
+            }
+
+        }
     }
 }
