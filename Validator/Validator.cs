@@ -349,10 +349,7 @@ namespace Validator
         }
 
 
-        /// <summary>       
-        ///Mange Exceptions by adding messages or literals return  
-        ///by the program and easily understood by the user instead of using "return false"
-        ///
+        /// <summary>  
         ///Below is method that checks if a string contains a decimal value
         /// </summary>
         /// <param name="input"></param>
@@ -388,12 +385,6 @@ namespace Validator
             else
             {
                 throw new Exception(input + "must be a decimal value.");
-
-                ///if you are working with UI like winforms,it may be better to implement the code below instead of the throw Exception;
-                ///
-                ///   Message.Show (input + "must be a decimal value.","Entry Error");
-                ///   textBox.Focus();
-                ///   return false;
             }
 
         }
