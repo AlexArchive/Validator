@@ -71,9 +71,8 @@ namespace Validator
         {
             int value;
             if (!int.TryParse(input, out value))
-            {
                 return false;
-            }
+
             return value % @by == 0;
         }
 
@@ -87,14 +86,10 @@ namespace Validator
         public static bool IsLength(string input, int min, int max)
         {
             if (input.Length < min)
-            {
                 return false;
-            }
 
             if (input.Length > max)
-            {
                 return false;
-            }
 
             return true;
         }
@@ -159,17 +154,13 @@ namespace Validator
             if (version == IpVersion.Four)
             {
                 if (!Validator.Matches(input, ipv4MaybePattern))
-                {
                     return false;
-                }
 
                 var parts = input.Split('.').Select(p => Convert.ToInt32(p));
                 return parts.Max() <= 255;
             }
-            else
-            {
-                return Validator.Matches(input, ipv6Pattern);
-            }
+
+            return Validator.Matches(input, ipv6Pattern);
         }
 
         /// <summary>
@@ -251,9 +242,8 @@ namespace Validator
         {
             DateTime inputDate;
             if (!DateTime.TryParse(input, out inputDate))
-            {
                 return false;
-            }
+
             return inputDate > date;
         }
 
@@ -267,9 +257,7 @@ namespace Validator
         {
             DateTime inputDate;
             if (!DateTime.TryParse(input, out inputDate))
-            {
                 return false;
-            }
 
             return inputDate < date;
         }
@@ -283,7 +271,7 @@ namespace Validator
         {
             try
             {
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                var serializer = new JavaScriptSerializer();
                 serializer.Deserialize<dynamic>(input);
             }
             catch (ArgumentException)

@@ -5,7 +5,7 @@ namespace Validator
 {
     public partial class Validator
     {
-        private static Dictionary<string, Regex> LocaleMobilePhoneRegexes = new Dictionary<string, Regex>
+        private static readonly Dictionary<string, Regex> LocaleMobilePhoneRegexes = new Dictionary<string, Regex>
 		{
 			{ "zh-CN", new Regex(@"^(\+?0?86\-?)?1[345789][0-9]{9}$", RegexOptions.Compiled) },
             { "zh-TW", new Regex(@"^(\+?886\-?|0)?9\d{8}$", RegexOptions.Compiled) },
@@ -36,9 +36,8 @@ namespace Validator
         {
             Regex localeRegex;
             if (LocaleMobilePhoneRegexes.TryGetValue(locale, out localeRegex))
-            {
                 return localeRegex.IsMatch(phoneNumber);
-            }
+            
             return false;
         }
     }

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Text.RegularExpressions;
 using Xunit;
 using Xunit.Extensions;
-using Xunit.Sdk;
 
 namespace Validator.UnitTest
 {
