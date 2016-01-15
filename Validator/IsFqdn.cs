@@ -30,7 +30,6 @@ namespace Validator
 	            parts = parts.Except(Enumerable.Repeat(tld, 1)).ToArray();
                 if (!Regex.IsMatch(tld, "^([a-z\u00a1-\uffff]{2,}|xn[a-z0-9-]{2,})$"))
                     return false;
-
             }
 
             foreach (var part in parts)

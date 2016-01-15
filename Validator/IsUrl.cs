@@ -20,7 +20,7 @@ namespace Validator
             /// <summary>
             /// Gets whether to require Tld or not.
             /// </summary>
-            public bool RequireTld { get; private set; }
+            public bool RequireTld { get; }
 
             /// <summary>
             /// Gets whether to require a protocol or not.
@@ -30,12 +30,12 @@ namespace Validator
             /// <summary>
             /// Gets whether to allow underscores or not.
             /// </summary>
-            public bool AllowUnderscores { get; private set; }
+            public bool AllowUnderscores { get; }
 
             /// <summary>
             /// Gets whether to allow a trailing dot or not.
             /// </summary>
-            public bool AllowTrailingDot { get; private set; }
+            public bool AllowTrailingDot { get; }
 
             /// <summary>
             /// Gets the optional list of whitelist hosts.
