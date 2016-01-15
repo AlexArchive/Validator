@@ -44,9 +44,6 @@ namespace Validator
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        private static string SanitizeInput(string value)
-        {
-            return value.Replace("\r", string.Empty).Replace("\n", string.Empty).ToLower();
-        }
+        private static string SanitizeInput(string value) => value.Replace("\r", string.Empty).Replace("\n", string.Empty).ToLower();
     }
 }
