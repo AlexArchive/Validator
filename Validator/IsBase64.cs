@@ -24,17 +24,23 @@ namespace Validator
 
             //Base64 values must be a multiple of 4 characters.
             if (input.Length == 0 || input.Length%4 != 0)
+            {
                 return false;
-
+            }
+            
             //Padding must be 0, 1 or 2 '=' characters.
             var valueWithoutPadding = input.TrimEnd(PaddingCharacter);
             if (input.Length - valueWithoutPadding.Length > 2)
+            {
                 return false;
+            }
 
             //If the given input contains a input not present in
             //the hashset it cannot be a valid Base64 string.
-            if (valueWithoutPadding.All(c => Base64Characters.Contains(c) != false))
+            if (valueWithoutPadding.All(c => Base64Characters.Contains(c)))
+            {
                 return true;
+            }
 
             return false;
         }

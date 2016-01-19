@@ -113,7 +113,9 @@ namespace Validator
             options = options ?? new UrlOptions();
 
             if (string.IsNullOrEmpty(url) || url.Length >= 2083 || url.StartsWith("mailto:", StringComparison.InvariantCultureIgnoreCase))
+            {
                 return false;
+            }
 
             var output = new CheckOutput();
             // i purposely structured each of these "check" methods the same way so this list of Funcs works.
@@ -134,7 +136,9 @@ namespace Validator
             {
                 output = f(url, options);
                 if (!output.IsValid)
+                {
                     break;
+                }
                 
                 url = output.NewUrl;
             }
@@ -233,9 +237,13 @@ namespace Validator
                 var queryStringValue = url.Substring(pathIndex + 1);
                 output.NewUrl = url.Substring(0, pathIndex);
                 if (string.IsNullOrEmpty(queryStringValue))
+                {
                     output.IsValid = true;
+                }
                 else
+                {
                     output.IsValid = !queryStringValue.Contains(" ");
+                }
             }
             else
             {

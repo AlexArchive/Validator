@@ -14,8 +14,10 @@ namespace Validator
             input = input.Replace(" ", "");
             input = input.Replace("-", "");
             if (!IsNumeric(input))
+            {
                 return false;
-
+            }
+            
             var sumOfDigits = input
                 .Where((e) => e >= '0' && e <= '9')
                 .Reverse()
