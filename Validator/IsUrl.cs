@@ -311,7 +311,7 @@ namespace Validator
             else
             {
                 host = hostName.Substring(0, colonIndex);
-                var port = -1;
+                int port;
                 TryParse(hostName.Substring(colonIndex + 1), out port);
                 if (port <= 0 || port > 65535)
                 {

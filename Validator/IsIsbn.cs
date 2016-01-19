@@ -90,6 +90,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        private static string RemoveSpacesAndHyphens(string input) => Regex.Replace(input, "[\\s-]+", "");
+        private static string RemoveSpacesAndHyphens(string input) => 
+            Regex.Replace(input, "[\\s-]+", "");
     }
 }
