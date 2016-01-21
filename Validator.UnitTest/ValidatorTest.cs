@@ -3,7 +3,6 @@ using System.Collections;
 using System.Text.RegularExpressions;
 using Xunit;
 using Xunit.Extensions;
-using Xunit.Sdk;
 
 namespace Validator.UnitTest
 {
@@ -450,8 +449,7 @@ namespace Validator.UnitTest
             const int version = 42;
             var message = Assert.Throws<ArgumentOutOfRangeException>(() =>
                 Validator.IsIsbn("9784873113685", (IsbnVersion)version));
-            Assert.Contains(
-                "Isbn version " + version + " is not supported.",
+            Assert.Contains("Isbn version " + version + " is not supported.", 
                 message.Message);
         }
 
@@ -581,15 +579,13 @@ namespace Validator.UnitTest
         [Fact]
         public void IsUuidThrowsWhenSuppliedUnknownVersion()
         {
-            var invalidVersion = 99;
+            const int invalidVersion = 99;
 
             var message = Assert.Throws<ArgumentOutOfRangeException>(() =>
             Validator.IsUuid("A987FBC9-4BED-3078-CF07-9141BA07C9F3", (UuidVersion)invalidVersion));
-            Assert.Contains(
-                "Uuid version " + invalidVersion + " is not supported.",
+            Assert.Contains("Uuid version " + invalidVersion + " is not supported.",
                 message.Message);
         }
-
 
         [Theory]
         [InlineData("507f1f77bcf86cd799439011", true)]

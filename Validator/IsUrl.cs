@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using static System.Int32;
 
 namespace Validator
 {
@@ -15,27 +15,27 @@ namespace Validator
             /// <summary>
             /// Gets the collection of protocols to allow.
             /// </summary>
-            public string[] Protocols { get; private set; }
+            public string[] Protocols { get; }
 
             /// <summary>
             /// Gets whether to require Tld or not.
             /// </summary>
-            public bool RequireTld { get; private set; }
+            public bool RequireTld { get; }
 
             /// <summary>
             /// Gets whether to require a protocol or not.
             /// </summary>
-            public bool RequireProtocol { get; private set; }
+            public bool RequireProtocol { get; }
 
             /// <summary>
             /// Gets whether to allow underscores or not.
             /// </summary>
-            public bool AllowUnderscores { get; private set; }
+            public bool AllowUnderscores { get; }
 
             /// <summary>
             /// Gets whether to allow a trailing dot or not.
             /// </summary>
-            public bool AllowTrailingDot { get; private set; }
+            public bool AllowTrailingDot { get; }
 
             /// <summary>
             /// Gets the optional list of whitelist hosts.
@@ -139,6 +139,7 @@ namespace Validator
                 {
                     break;
                 }
+                
                 url = output.NewUrl;
             }
 
@@ -300,20 +301,18 @@ namespace Validator
             //if atIndex is -1, then we'll just get the whole substring
             var hostName = url.Substring(atIndex + 1);
             var colonIndex = hostName.IndexOf(":", StringComparison.InvariantCultureIgnoreCase);
-            var host = string.Empty;
+            string host;
 
             // don't care about modifiedUrl here since this is the last method and there's nothing left to check.
             output.NewUrl = string.Empty;
 
             if (colonIndex == -1)
-            {
                 host = hostName;
-            }
             else
             {
                 host = hostName.Substring(0, colonIndex);
-                var port = -1;
-                Int32.TryParse(hostName.Substring(colonIndex + 1), out port);
+                int port;
+                TryParse(hostName.Substring(colonIndex + 1), out port);
                 if (port <= 0 || port > 65535)
                 {
                     output.IsValid = false;
@@ -325,8 +324,7 @@ namespace Validator
             var isIp = Validator.IsIp(host, IpVersion.Four) || Validator.IsIp(host, IpVersion.Six);
             var isFqdn = Validator.IsFqdn(host);
 
-            if (!isIp && !isFqdn &&
-                !string.Equals(host, "localhost", StringComparison.InvariantCultureIgnoreCase))
+            if (!isIp && !isFqdn && !string.Equals(host, "localhost", StringComparison.InvariantCultureIgnoreCase))
             {
                 output.IsValid = false;
                 return output;

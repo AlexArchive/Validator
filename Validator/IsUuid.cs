@@ -29,7 +29,7 @@ namespace Validator
                 case UuidVersion.Any:
                     return Matches(input, AllVersionsRegex, RegexOptions.IgnoreCase);
                 default:
-                    throw new ArgumentOutOfRangeException("version", string.Format("Uuid version {0} is not supported.", version));
+                    throw new ArgumentOutOfRangeException(nameof(version), $"Uuid version {version} is not supported.");
             }
         }
     }
