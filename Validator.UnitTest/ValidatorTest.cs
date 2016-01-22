@@ -8,6 +8,96 @@ namespace Validator.UnitTest
 {
     public class ValidatorTest
     {
+        //[Theory]
+        //[InlineData("9783836221191", true)]
+        //[InlineData("978-3-8362-2119-1", true)]
+        //[InlineData("978 3 8362 2119 1", true)]
+        //[InlineData("9784873113685", true)]
+        //[InlineData("978-4-87311-368-5", true)]
+        //[InlineData("978 4 87311 368 5", true)]
+        //[InlineData("9783836221190", false)]
+        //[InlineData("978-3-8362-2119-0", false)]
+        //[InlineData("978 3 8362 2119 0", false)]
+        //[InlineData("Foo", false)]
+        //public void IsIsbnVersion13(string input, bool expected)
+        //{
+        //    var actual = input.IsIsbn(IsbnVersion.Thirteen);
+        //    Assert.Equal(expected, actual);
+        //}
+
+        //[Fact]
+        //public void IsIsbnnThrowsWhenSuppliedUnknownVersion()
+        //{
+        //    const int version = 42;
+        //    var message = Assert.Throws<ArgumentOutOfRangeException>(() => 
+        //    input.IsIsbn("9784873113685", (IsbnVersion)version));
+        //    Assert.Contains("Isbn version " + version + " is not supported.", 
+        //        message.Message);
+        //}
+
+        //[Theory]
+        //[InlineData(UuidVersion.Three, "A987FBC9-4BED-3078-CF07-9141BA07C9F3", true)]
+
+        //[InlineData(UuidVersion.Three, "", false)]
+        //[InlineData(UuidVersion.Three, "xxxA987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
+        //[InlineData(UuidVersion.Three, "934859", false)]
+        //[InlineData(UuidVersion.Three, "AAAAAAAA-1111-1111-AAAG-111111111111", false)]
+        //[InlineData(UuidVersion.Three, "A987FBC9-4BED-4078-8F07-9141BA07C9F3", false)]
+        //[InlineData(UuidVersion.Three, "A987FBC9-4BED-5078-AF07-9141BA07C9F3", false)]
+
+        //[InlineData(UuidVersion.Four, "713ae7e3-cb32-45f9-adcb-7c4fa86b90c1", true)]
+        //[InlineData(UuidVersion.Four, "625e63f3-58f5-40b7-83a1-a72ad31acffb", true)]
+        //[InlineData(UuidVersion.Four, "57b73598-8764-4ad0-a76a-679bb6640eb1", true)]
+        //[InlineData(UuidVersion.Four, "9c858901-8a57-4791-81fe-4c455b099bc9", true)]
+
+        //[InlineData(UuidVersion.Four, "", false)]
+        //[InlineData(UuidVersion.Four, "xxxA987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
+        //[InlineData(UuidVersion.Four, "934859", false)]
+        //[InlineData(UuidVersion.Four, "AAAAAAAA-1111-1111-AAAG-111111111111", false)]
+        //[InlineData(UuidVersion.Four, "A987FBC9-4BED-5078-AF07-9141BA07C9F3", false)]
+        //[InlineData(UuidVersion.Four, "A987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
+
+        //[InlineData(UuidVersion.Five, "987FBC97-4BED-5078-AF07-9141BA07C9F3", true)]
+        //[InlineData(UuidVersion.Five, "987FBC97-4BED-5078-BF07-9141BA07C9F3", true)]
+        //[InlineData(UuidVersion.Five, "987FBC97-4BED-5078-8F07-9141BA07C9F3", true)]
+        //[InlineData(UuidVersion.Five, "987FBC97-4BED-5078-9F07-9141BA07C9F3", true)]
+
+        //[InlineData(UuidVersion.Five, "", false)]
+        //[InlineData(UuidVersion.Five, "xxxA987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
+        //[InlineData(UuidVersion.Five, "934859", false)]
+        //[InlineData(UuidVersion.Five, "AAAAAAAA-1111-1111-AAAG-111111111111", false)]
+        //[InlineData(UuidVersion.Five, "9c858901-8a57-4791-81fe-4c455b099bc9", false)]
+        //[InlineData(UuidVersion.Five, "A987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
+        //public void IsUuidWithVersion(UuidVersion version, string input, bool expectedValid)
+        //{
+        //    var actual = input.IsUuid(version);
+        //    Assert.Equal(actual, expectedValid);
+        //}
+
+        //[Fact]
+        //public void IsUuidThrowsWhenSuppliedUnknownVersion()
+        //{
+        //    const int invalidVersion = 99;
+
+        //    var message = Assert.Throws<ArgumentOutOfRangeException>(() =>
+        //    input.IsUuid("A987FBC9-4BED-3078-CF07-9141BA07C9F3", (UuidVersion)invalidVersion));
+        //    Assert.Contains("Uuid version " + invalidVersion + " is not supported.",
+        //        message.Message);
+        //}
+
+        //[Fact]
+        //public void IsFqdnWithTrailingDotOption()
+        //{
+        //    var actual = input.IsFqdn("example.com.", allowTrailingDot: true);
+        //    Assert.True(actual);
+        //}
+        //[Fact]
+        //public void IsFqdnWithUnderscoreOption()
+        //{
+        //    var actual = input.IsFqdn("test_.com", allowUnderscore: true);
+        //    Assert.True(actual);
+        //}
+
         [Theory]
         [InlineData("Foo", true)]
         [InlineData("1Foo", false)]
@@ -16,7 +106,7 @@ namespace Validator.UnitTest
         [InlineData("Foo_Bar", false)]
         public void IsAlpha(string input, bool expected)
         {
-            var actual = Validator.IsAlpha(input);
+            var actual = input.IsAlpha();
             Assert.Equal(expected, actual);
         }
 
@@ -26,7 +116,7 @@ namespace Validator.UnitTest
         [InlineData("123Foo123", false)]
         public void IsNumeric(string input, bool expected)
         {
-            var actual = Validator.IsNumeric(input);
+            var actual = input.IsNumeric();
             Assert.Equal(expected, actual);
         }
 
@@ -37,7 +127,7 @@ namespace Validator.UnitTest
         [InlineData("FOO123", false)]
         public void IsLowercase(string input, bool expected)
         {
-            var actual = Validator.IsLowercase(input);
+            var actual = input.IsLowercase();
             Assert.Equal(expected, actual);
         }
 
@@ -48,7 +138,7 @@ namespace Validator.UnitTest
         [InlineData("foo123", false)]
         public void IsUppercase(string input, bool expected)
         {
-            var actual = Validator.IsUppercase(input);
+            var actual = input.IsUppercase();
             Assert.Equal(expected, actual);
         }
 
@@ -60,7 +150,7 @@ namespace Validator.UnitTest
         [InlineData("Foo?", false)]
         public void IsBase64(string input, bool expected)
         {
-            var actual = Validator.IsBase64(input);
+            var actual = input.IsBase64();
             Assert.Equal(expected, actual);
         }
 
@@ -72,7 +162,7 @@ namespace Validator.UnitTest
         [InlineData("", false)]
         public void IsInt(string input, bool expected)
         {
-            var actual = Validator.IsInt(input);
+            var actual = input.IsInt();
             Assert.Equal(expected, actual);
         }
 
@@ -82,7 +172,7 @@ namespace Validator.UnitTest
         [InlineData("", false)]
         public void IsFloat(string input, bool expected)
         {
-            var actual = Validator.IsFloat(input);
+            var actual = input.IsFloat();
             Assert.Equal(expected, actual);
         }
 
@@ -93,7 +183,7 @@ namespace Validator.UnitTest
         [InlineData("Foo", 2, false)]
         public void IsDivisibleBy(string input, int by, bool expected)
         {
-            var actual = Validator.IsDivisibleBy(input, by);
+            var actual = input.IsDivisibleBy(by);
             Assert.Equal(expected, actual);
         }
 
@@ -103,7 +193,7 @@ namespace Validator.UnitTest
         [InlineData("", 1, 2, false)]
         public void IsLength(string input, int min, int max, bool expected)
         {
-            var actual = Validator.IsLength(input, min, max);
+            var actual = input.IsLength(min, max);
             Assert.Equal(expected, actual);
         }
 
@@ -115,7 +205,7 @@ namespace Validator.UnitTest
         [InlineData("１２３", false)]
         public void IsAscii(string input, bool expected)
         {
-            var actual = Validator.IsAscii(input);
+            var actual = input.IsAscii();
             Assert.Equal(expected, actual);
         }
 
@@ -132,7 +222,7 @@ namespace Validator.UnitTest
         [InlineData("<>@\" *.", false)]
         public void IsMultibyte(string input, bool expected)
         {
-            var actual = Validator.IsMultiByte(input);
+            var actual = input.IsMultiByte();
             Assert.Equal(expected, actual);
         }
 
@@ -145,7 +235,7 @@ namespace Validator.UnitTest
         [InlineData("００１１", false)]
         public void IsHalfWidth(string input, bool expected)
         {
-            var actual = Validator.IsHalfWidth(input);
+            var actual = input.IsHalfWidth();
             Assert.Equal(expected, actual);
         }
 
@@ -159,7 +249,7 @@ namespace Validator.UnitTest
         [InlineData("!\"#$%&()<>/+=-_? ~^|.,@`{}[]", false)]
         public void IsFullWidth(string input, bool expected)
         {
-            var actual = Validator.IsFullWidth(input);
+            var actual = input.IsFullWidth();
             Assert.Equal(expected, actual);
         }
 
@@ -176,7 +266,7 @@ namespace Validator.UnitTest
         [InlineData("ｶﾀｶﾅﾞﾬ", false)]
         public void IsVariableWidth(string input, bool expected)
         {
-            var actual = Validator.IsVariableWidth(input);
+            var actual = input.IsVariableWidth();
             Assert.Equal(expected, actual);
         }
 
@@ -189,7 +279,7 @@ namespace Validator.UnitTest
         [InlineData("ABC1-2-3", false)]
         public void IsSurrogatePair(string input, bool expected)
         {
-            var actual = Validator.IsSurrogatePair(input);
+            var actual = input.IsSurrogatePair();
             Assert.Equal(expected, actual);
         }
 
@@ -199,7 +289,7 @@ namespace Validator.UnitTest
         [InlineData("Baz", new[] { "Foo", "Bar" }, false)]
         public void IsIn(string input, string[] values, bool expected)
         {
-            var actual = Validator.IsIn(input, values);
+            var actual = input.IsIn(values);
             Assert.Equal(expected, actual);
         }
 
@@ -218,7 +308,7 @@ namespace Validator.UnitTest
         [InlineData("::1", IpVersion.Six, true)]
         public void IsIp(string input, IpVersion version, bool expected)
         {
-            var actual = Validator.IsIp(input, version);
+            var actual = input.IsIp(version);
             Assert.Equal(actual, expected);
         }
 
@@ -231,7 +321,7 @@ namespace Validator.UnitTest
         [InlineData("@invalid.com", false)]
         public void IsEmail(string input, bool expected)
         {
-            var actual = Validator.IsEmail(input);
+            var actual = input.IsEmail();
             Assert.Equal(actual, expected);
         }
 
@@ -243,7 +333,7 @@ namespace Validator.UnitTest
         [InlineData("..", false)]
         public void IsHexadecimal(string input, bool expected)
         {
-            var actual = Validator.IsHexadecimal(input);
+            var actual = input.IsHexadecimal();
             Assert.Equal(expected, actual);
         }
 
@@ -254,7 +344,7 @@ namespace Validator.UnitTest
         [InlineData("Foo_", false)]
         public void IsAlphanumeric(string input, bool expected)
         {
-            var actual = Validator.IsAlphanumeric(input);
+            var actual = input.IsAlphanumeric();
             Assert.Equal(expected, actual);
         }
 
@@ -270,7 +360,7 @@ namespace Validator.UnitTest
         [InlineData("5398228707871528", false)]
         public void IsCreditCard(string input, bool expected)
         {
-            var actual = Validator.IsCreditCard(input);
+            var actual = input.IsCreditCard();
             Assert.Equal(expected, actual);
         }
 
@@ -284,7 +374,7 @@ namespace Validator.UnitTest
         [InlineData("#ff12FG", false)]
         public void IsHexColor(string input, bool expected)
         {
-            var actual = Validator.IsHexColor(input);
+            var actual = input.IsHexColor();
             Assert.Equal(expected, actual);
         }
 
@@ -294,7 +384,7 @@ namespace Validator.UnitTest
         [InlineData("Baz", false)]
         public void IsEqual(string input, bool expected)
         {
-            var actual = Validator.Equals(input, "Foo");
+            var actual = input.Equals("Foo");
             Assert.Equal(expected, actual);
         }
 
@@ -305,7 +395,7 @@ namespace Validator.UnitTest
         [InlineData("{username:\"Admin\"", false)]
         public void IsJson(string input, bool expected)
         {
-            var actual = Validator.IsJson(input);
+            var actual = input.IsJson();
             Assert.Equal(expected, actual);
         }
 
@@ -321,7 +411,7 @@ namespace Validator.UnitTest
         [InlineData("Not05/01A/date/2001", false)]
         public void IsDate(string input, bool expected)
         {
-            var actual = Validator.IsDate(input);
+            var actual = input.IsDate();
             Assert.Equal(expected, actual);
         }
 
@@ -333,12 +423,10 @@ namespace Validator.UnitTest
                 {
                     new object[] {null, new DateTime(2011, 8, 4), false},
                     new object[] {"", new DateTime(2011, 8, 4), false},
-
                     new object[] {"2011-08-04", new DateTime(2011, 8, 3), true},
                     new object[] {"2011-08-10", new DateTime(2011, 8, 3), true},
                     new object[] {"2010-07-02", new DateTime(2011, 8, 3), false},
                     new object[] {"2011-08-03", new DateTime(2011, 8, 3), false},
-
                     new object[] {"foo", new DateTime(2011, 8, 3), false}
                 };
             }
@@ -348,7 +436,7 @@ namespace Validator.UnitTest
         [PropertyData("IsAfterData")]
         public void IsAfter(string input, DateTime date, bool expected)
         {
-            var actual = Validator.IsAfter(input, date);
+            var actual = input.IsAfter(date);
             Assert.Equal(expected, actual);
         }
 
@@ -360,17 +448,14 @@ namespace Validator.UnitTest
                 {
                     new object[] {null, new DateTime(2011, 8, 4), false},
                     new object[] {"", new DateTime(2011, 8, 4), false},
-
                     new object[] {"2010-07-02", new DateTime(2011, 8, 4), true},
                     new object[] {"2010-08-04", new DateTime(2011, 8, 4), true},
                     new object[] {"2011-08-04", new DateTime(2011, 8, 4), false},
                     new object[] {"2011-09-10", new DateTime(2011, 8, 4), false},
-
                     new object[] {"2010-07-02", new DateTime(2011, 7, 4), true},
                     new object[] {"2010-08-04", new DateTime(2011, 7, 4), true},
                     new object[] {"2011-08-04", new DateTime(2011, 7, 4), false},
                     new object[] {"2011-09-10", new DateTime(2011, 7, 4), false},
-
                     new object[] {"foo", new DateTime(2011, 7, 4), false}
                 };
             }
@@ -380,7 +465,7 @@ namespace Validator.UnitTest
         [PropertyData("IsBeforeData")]
         public void IsBefore(string input, DateTime date, bool expected)
         {
-            var actual = Validator.IsBefore(input, date);
+            var actual = input.IsBefore(date);
             Assert.Equal(expected, actual);
         }
 
@@ -391,7 +476,7 @@ namespace Validator.UnitTest
         [InlineData("NULL", false)]
         public void IsNull(string input, bool expected)
         {
-            var actual = Validator.IsNull(input);
+            var actual = input.IsNull();
             Assert.Equal(expected, actual);
         }
 
@@ -403,7 +488,7 @@ namespace Validator.UnitTest
         [InlineData("Foo", false)]
         public void IsIsbn(string input, bool expected)
         {
-            var actual = Validator.IsIsbn(input);
+            var actual = input.IsIsbn();
             Assert.Equal(expected, actual);
         }
 
@@ -422,35 +507,8 @@ namespace Validator.UnitTest
         [InlineData("Foo", false)]
         public void IsIsbnVersion10(string input, bool expected)
         {
-            var actual = Validator.IsIsbn(input, IsbnVersion.Ten);
+            var actual = input.IsIsbn(IsbnVersion.Ten);
             Assert.Equal(expected, actual);
-        }
-
-        [Theory]
-        [InlineData("9783836221191", true)]
-        [InlineData("978-3-8362-2119-1", true)]
-        [InlineData("978 3 8362 2119 1", true)]
-        [InlineData("9784873113685", true)]
-        [InlineData("978-4-87311-368-5", true)]
-        [InlineData("978 4 87311 368 5", true)]
-        [InlineData("9783836221190", false)]
-        [InlineData("978-3-8362-2119-0", false)]
-        [InlineData("978 3 8362 2119 0", false)]
-        [InlineData("Foo", false)]
-        public void IsIsbnVersion13(string input, bool expected)
-        {
-            var actual = Validator.IsIsbn(input, IsbnVersion.Thirteen);
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void IsIsbnnThrowsWhenSuppliedUnknownVersion()
-        {
-            const int version = 42;
-            var message = Assert.Throws<ArgumentOutOfRangeException>(() =>
-                Validator.IsIsbn("9784873113685", (IsbnVersion)version));
-            Assert.Contains("Isbn version " + version + " is not supported.", 
-                message.Message);
         }
 
         [Theory]
@@ -461,7 +519,7 @@ namespace Validator.UnitTest
         [InlineData("", " ", false)]
         public void Contains(string input, string element, bool expected)
         {
-            var actual = Validator.Contains(input, element);
+            var actual = input.Contains(element);
             Assert.Equal(expected, actual);
         }
 
@@ -476,10 +534,10 @@ namespace Validator.UnitTest
         [InlineData("01/01/01", false)]
         [InlineData("0123456789", false)]
         [InlineData("!@#$%^", false)]
-        [InlineData("abc@xyz.com", false)] // source validator.js would fail this too, i believe
+        [InlineData("abc@xyz.com", false)] // source input.js would fail this too, i believe
         public void IsUrl(string url, bool expected)
         {
-            var actual = Validator.IsUrl(url);
+            var actual = url.IsUrl();
             Assert.Equal(expected, actual);
         }
 
@@ -490,7 +548,7 @@ namespace Validator.UnitTest
         [InlineData("foobar.com", true)]
         public void IsUrl2(string url, bool expected)
         {
-            var actual = Validator.IsUrl(url);
+            var actual = url.IsUrl();
             Assert.Equal(expected, actual);
         }
 
@@ -503,20 +561,17 @@ namespace Validator.UnitTest
         [InlineData("foo", "Foo", false)]
         public void Matches(string input, string pattern, bool expected)
         {
-            var actual = Validator.Matches(input, pattern);
+            var actual = input.Matches(pattern);
             Assert.Equal(actual, expected);
         }
 
         [Theory]
         [InlineData("Foo", "foo", RegexOptions.IgnoreCase, true)]
         [InlineData("\r\nFoo", "^Foo$", RegexOptions.Multiline, true)]
-        public void MatchesWithOptions(
-            string input,
-            string pattern,
-            RegexOptions options,
-            bool expected)
+        public void MatchesWithOptions(string input, string pattern, 
+            RegexOptions options, bool expected)
         {
-            var actual = Validator.Matches(input, pattern, options);
+            var actual = input.Matches(pattern, options);
             Assert.Equal(actual, expected);
         }
 
@@ -533,59 +588,11 @@ namespace Validator.UnitTest
         [InlineData("AAAAAAAA-1111-1111-AAAG-111111111111", false)]
         public void IsUuidWithAnyVersion(string input, bool expectedValid)
         {
-            var actual = Validator.IsUuid(input);
+            var actual = input.IsUuid();
             Assert.Equal(actual, expectedValid);
         }
 
-        [Theory]
-        [InlineData(UuidVersion.Three, "A987FBC9-4BED-3078-CF07-9141BA07C9F3", true)]
-
-        [InlineData(UuidVersion.Three, "", false)]
-        [InlineData(UuidVersion.Three, "xxxA987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
-        [InlineData(UuidVersion.Three, "934859", false)]
-        [InlineData(UuidVersion.Three, "AAAAAAAA-1111-1111-AAAG-111111111111", false)]
-        [InlineData(UuidVersion.Three, "A987FBC9-4BED-4078-8F07-9141BA07C9F3", false)]
-        [InlineData(UuidVersion.Three, "A987FBC9-4BED-5078-AF07-9141BA07C9F3", false)]
-
-        [InlineData(UuidVersion.Four, "713ae7e3-cb32-45f9-adcb-7c4fa86b90c1", true)]
-        [InlineData(UuidVersion.Four, "625e63f3-58f5-40b7-83a1-a72ad31acffb", true)]
-        [InlineData(UuidVersion.Four, "57b73598-8764-4ad0-a76a-679bb6640eb1", true)]
-        [InlineData(UuidVersion.Four, "9c858901-8a57-4791-81fe-4c455b099bc9", true)]
-
-        [InlineData(UuidVersion.Four, "", false)]
-        [InlineData(UuidVersion.Four, "xxxA987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
-        [InlineData(UuidVersion.Four, "934859", false)]
-        [InlineData(UuidVersion.Four, "AAAAAAAA-1111-1111-AAAG-111111111111", false)]
-        [InlineData(UuidVersion.Four, "A987FBC9-4BED-5078-AF07-9141BA07C9F3", false)]
-        [InlineData(UuidVersion.Four, "A987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
-
-        [InlineData(UuidVersion.Five, "987FBC97-4BED-5078-AF07-9141BA07C9F3", true)]
-        [InlineData(UuidVersion.Five, "987FBC97-4BED-5078-BF07-9141BA07C9F3", true)]
-        [InlineData(UuidVersion.Five, "987FBC97-4BED-5078-8F07-9141BA07C9F3", true)]
-        [InlineData(UuidVersion.Five, "987FBC97-4BED-5078-9F07-9141BA07C9F3", true)]
-
-        [InlineData(UuidVersion.Five, "", false)]
-        [InlineData(UuidVersion.Five, "xxxA987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
-        [InlineData(UuidVersion.Five, "934859", false)]
-        [InlineData(UuidVersion.Five, "AAAAAAAA-1111-1111-AAAG-111111111111", false)]
-        [InlineData(UuidVersion.Five, "9c858901-8a57-4791-81fe-4c455b099bc9", false)]
-        [InlineData(UuidVersion.Five, "A987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
-        public void IsUuidWithVersion(UuidVersion version, string input, bool expectedValid)
-        {
-            var actual = Validator.IsUuid(input, version);
-            Assert.Equal(actual, expectedValid);
-        }
-
-        [Fact]
-        public void IsUuidThrowsWhenSuppliedUnknownVersion()
-        {
-            const int invalidVersion = 99;
-
-            var message = Assert.Throws<ArgumentOutOfRangeException>(() =>
-            Validator.IsUuid("A987FBC9-4BED-3078-CF07-9141BA07C9F3", (UuidVersion)invalidVersion));
-            Assert.Contains("Uuid version " + invalidVersion + " is not supported.",
-                message.Message);
-        }
+        
 
         [Theory]
         [InlineData("507f1f77bcf86cd799439011", true)]
@@ -596,7 +603,7 @@ namespace Validator.UnitTest
         [InlineData("507s1f77bcf86cd799439011", false)]
         public void IsMongoId(string input, bool expected)
         {
-            var actual = Validator.IsMongoId(input);
+            var actual = input.IsMongoId();
             Assert.Equal(actual, expected);
         }
 
@@ -609,7 +616,7 @@ namespace Validator.UnitTest
         [InlineData("", 2, false)]
         public void IsByteLength(string input, int min, bool expected)
         {
-            var actual = Validator.IsByteLength(input, min);
+            var actual = input.IsByteLength(min);
             Assert.Equal(actual, expected);
         }
 
@@ -621,7 +628,7 @@ namespace Validator.UnitTest
         [InlineData("", 2, 3, false)]
         public void IsByteLengthWithMax(string input, int min, int max, bool expected)
         {
-            var actual = Validator.IsByteLength(input, min, max);
+            var actual = input.IsByteLength(min, max);
             Assert.Equal(actual, expected);
         }
 
@@ -641,21 +648,8 @@ namespace Validator.UnitTest
         [InlineData("/more.com", false)]
         public void IsFqdn(string input, bool expected)
         {
-            var actual = Validator.IsFqdn(input);
+            var actual = input.IsFqdn();
             Assert.Equal(actual, expected);
-        }
-
-        [Fact]
-        public void IsFqdnWithTrailingDotOption()
-        {
-            var actual = Validator.IsFqdn("example.com.", allowTrailingDot: true);
-            Assert.True(actual);
-        }
-        [Fact]
-        public void IsFqdnWithUnderscoreOption()
-        {
-            var actual = Validator.IsFqdn("test_.com", allowUnderscore: true);
-            Assert.True(actual);
         }
 
         [Theory]
@@ -663,11 +657,11 @@ namespace Validator.UnitTest
         [InlineData("input")]
         public void IsFqdnWithoutRequireTldOption(string input)
         {
-            var actual = Validator.IsFqdn(input, requireTld: false);
+            var actual = input.IsFqdn(requireTld: false);
             Assert.True(actual);
         }
 
-        //copied from https://github.com/chriso/validator.js/blob/master/test/validators.js
+        //copied from https://github.com/chriso/input.js/blob/master/test/validators.js
         [Theory]
         [InlineData("15323456787", "zh-CN", true)]
         [InlineData("13523333233", "zh-CN", true)]
@@ -762,7 +756,7 @@ namespace Validator.UnitTest
         [InlineData("123456789", "en-HK", false)]
         [InlineData("+852-1234-56789", "en-HK", false)]
 
-        // Lack of test data in original Validator.js.
+        // Lack of test data in original input.js.
         [InlineData("+351919706735", "pt-PT", true)]
 
         [InlineData("447789345856", "en-GB", true)]
@@ -848,7 +842,7 @@ namespace Validator.UnitTest
         
         public void IsMobilePhone(string phoneNumber, string locale, bool expected)
         {
-            var actual = Validator.IsMobilePhone(phoneNumber, locale);
+            var actual = phoneNumber.IsMobilePhone(locale);
             Assert.Equal(expected, actual);
         }
     }

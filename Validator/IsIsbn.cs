@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Validator
 {
-    public partial class Validator
+    public static partial class Validator
     {
         /// <summary>
         /// Indicates whether supplied input is either in ISBN-10 digit format or ISBN-13 digit format.
@@ -12,7 +12,7 @@ namespace Validator
         /// <param name="version">Valid options are: IsbnVersion.Ten, IsbnVersion.Thirteen or IsbnVersion.Any</param>
         /// <returns></returns>
         /// IsbnVersion
-        public static bool IsIsbn(string input, IsbnVersion version = IsbnVersion.Any)
+        public static bool IsIsbn(this string input, IsbnVersion version = IsbnVersion.Any)
         {
             input = RemoveSpacesAndHyphens(input);
             switch (version)
@@ -32,7 +32,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        private static bool IsIsbn13(string input)
+        private static bool IsIsbn13(this string input)
         {
             var checksum = 0;
             
@@ -56,7 +56,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        private static bool IsIsbn10(string input)
+        private static bool IsIsbn10(this string input)
         {
             var checksum = 0;
             // Ensure that input only contains 10 numbers OR 9 numbers and the letter X.
