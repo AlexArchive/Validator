@@ -5,7 +5,7 @@ using static System.Int32;
 
 namespace Validator
 {
-    public static partial class Validator
+    public partial class Validator
     {
         /// <summary>
         /// Simple class used to encapsulate options when checking a string for Url compatability.
@@ -108,7 +108,7 @@ namespace Validator
         /// <param name="url">Value to check.</param>
         /// <param name="options">Options to consider.</param>
         /// <returns>True if a Url, false otherwise.</returns>
-        public static bool IsUrl(this string url, UrlOptions options = null)
+        public static bool IsUrl(string url, UrlOptions options = null)
         {
             options = options ?? new UrlOptions();
 

@@ -21,7 +21,7 @@ namespace Validator.UnitTest
         [InlineData("Foo", false)]
         public void IsIsbnVersion13(string input, bool expected)
         {
-            var actual = input.IsIsbn(IsbnVersion.Thirteen);
+            var actual = Validator.IsIsbn(input, IsbnVersion.Thirteen);
             Assert.Equal(expected, actual);
         }
 
@@ -30,7 +30,7 @@ namespace Validator.UnitTest
         public void IsIsbnnThrowsWhenSuppliedUnknownVersion(string input)
         {
             const int version = 42;
-            var message = Assert.Throws<ArgumentOutOfRangeException>(() => input.IsIsbn((IsbnVersion)version));
+            var message = Assert.Throws<ArgumentOutOfRangeException>(() => Validator.IsIsbn(input, (IsbnVersion)version));
             Assert.Contains("Isbn version " + version + " is not supported.", message.Message);
         }
 
@@ -69,7 +69,7 @@ namespace Validator.UnitTest
         [InlineData(UuidVersion.Five, "A987FBC9-4BED-3078-CF07-9141BA07C9F3", false)]
         public void IsUuidWithVersion(UuidVersion version, string input, bool expectedValid)
         {
-            var actual = input.IsUuid(version);
+            var actual = Validator.IsUuid(input, version);
             Assert.Equal(actual, expectedValid);
         }
 
@@ -78,7 +78,7 @@ namespace Validator.UnitTest
         public void IsUuidThrowsWhenSuppliedUnknownVersion(string input)
         {
             const int invalidVersion = 99;
-            var message = Assert.Throws<ArgumentOutOfRangeException>(() => input.IsUuid((UuidVersion)invalidVersion));
+            var message = Assert.Throws<ArgumentOutOfRangeException>(() => Validator.IsUuid(input, (UuidVersion)invalidVersion));
             Assert.Contains("Uuid version " + invalidVersion + " is not supported.", message.Message);
         }
 
@@ -86,7 +86,7 @@ namespace Validator.UnitTest
         [InlineData("example.com.")]
         public void IsFqdnWithTrailingDotOption(string input)
         {
-            var actual = input.IsFqdn(allowTrailingDot: true);
+            var actual = Validator.IsFqdn(input, allowTrailingDot: true);
             Assert.True(actual);
         }
 
@@ -94,7 +94,7 @@ namespace Validator.UnitTest
         [InlineData("test_.com")]
         public void IsFqdnWithUnderscoreOption(string input)
         {
-            var actual = input.IsFqdn(allowUnderscore: true);
+            var actual = Validator.IsFqdn(input, allowUnderscore: true);
             Assert.True(actual);
         }
 
@@ -106,7 +106,7 @@ namespace Validator.UnitTest
         [InlineData("Foo_Bar", false)]
         public void IsAlpha(string input, bool expected)
         {
-            var actual = input.IsAlpha();
+            var actual = Validator.IsAlpha(input);
             Assert.Equal(expected, actual);
         }
 
@@ -116,7 +116,7 @@ namespace Validator.UnitTest
         [InlineData("123Foo123", false)]
         public void IsNumeric(string input, bool expected)
         {
-            var actual = input.IsNumeric();
+            var actual = Validator.IsNumeric(input);
             Assert.Equal(expected, actual);
         }
 
@@ -127,7 +127,7 @@ namespace Validator.UnitTest
         [InlineData("FOO123", false)]
         public void IsLowercase(string input, bool expected)
         {
-            var actual = input.IsLowercase();
+            var actual = Validator.IsLowercase(input);
             Assert.Equal(expected, actual);
         }
 
@@ -138,7 +138,7 @@ namespace Validator.UnitTest
         [InlineData("foo123", false)]
         public void IsUppercase(string input, bool expected)
         {
-            var actual = input.IsUppercase();
+            var actual = Validator.IsUppercase(input);
             Assert.Equal(expected, actual);
         }
 
@@ -150,7 +150,7 @@ namespace Validator.UnitTest
         [InlineData("Foo?", false)]
         public void IsBase64(string input, bool expected)
         {
-            var actual = input.IsBase64();
+            var actual = Validator.IsBase64(input);
             Assert.Equal(expected, actual);
         }
 
@@ -162,7 +162,7 @@ namespace Validator.UnitTest
         [InlineData("", false)]
         public void IsInt(string input, bool expected)
         {
-            var actual = input.IsInt();
+            var actual = Validator.IsInt(input);
             Assert.Equal(expected, actual);
         }
 
@@ -172,7 +172,7 @@ namespace Validator.UnitTest
         [InlineData("", false)]
         public void IsFloat(string input, bool expected)
         {
-            var actual = input.IsFloat();
+            var actual = Validator.IsFloat(input);
             Assert.Equal(expected, actual);
         }
 
@@ -183,7 +183,7 @@ namespace Validator.UnitTest
         [InlineData("Foo", 2, false)]
         public void IsDivisibleBy(string input, int by, bool expected)
         {
-            var actual = input.IsDivisibleBy(by);
+            var actual = Validator.IsDivisibleBy(input, by);
             Assert.Equal(expected, actual);
         }
 
@@ -193,7 +193,7 @@ namespace Validator.UnitTest
         [InlineData("", 1, 2, false)]
         public void IsLength(string input, int min, int max, bool expected)
         {
-            var actual = input.IsLength(min, max);
+            var actual = Validator.IsLength(input, min, max);
             Assert.Equal(expected, actual);
         }
 
@@ -205,7 +205,7 @@ namespace Validator.UnitTest
         [InlineData("１２３", false)]
         public void IsAscii(string input, bool expected)
         {
-            var actual = input.IsAscii();
+            var actual = Validator.IsAscii(input);
             Assert.Equal(expected, actual);
         }
 
@@ -222,7 +222,7 @@ namespace Validator.UnitTest
         [InlineData("<>@\" *.", false)]
         public void IsMultibyte(string input, bool expected)
         {
-            var actual = input.IsMultiByte();
+            var actual = Validator.IsMultiByte(input);
             Assert.Equal(expected, actual);
         }
 
@@ -235,7 +235,7 @@ namespace Validator.UnitTest
         [InlineData("００１１", false)]
         public void IsHalfWidth(string input, bool expected)
         {
-            var actual = input.IsHalfWidth();
+            var actual = Validator.IsHalfWidth(input);
             Assert.Equal(expected, actual);
         }
 
@@ -249,7 +249,7 @@ namespace Validator.UnitTest
         [InlineData("!\"#$%&()<>/+=-_? ~^|.,@`{}[]", false)]
         public void IsFullWidth(string input, bool expected)
         {
-            var actual = input.IsFullWidth();
+            var actual = Validator.IsFullWidth(input);
             Assert.Equal(expected, actual);
         }
 
@@ -266,7 +266,7 @@ namespace Validator.UnitTest
         [InlineData("ｶﾀｶﾅﾞﾬ", false)]
         public void IsVariableWidth(string input, bool expected)
         {
-            var actual = input.IsVariableWidth();
+            var actual = Validator.IsVariableWidth(input);
             Assert.Equal(expected, actual);
         }
 
@@ -279,7 +279,7 @@ namespace Validator.UnitTest
         [InlineData("ABC1-2-3", false)]
         public void IsSurrogatePair(string input, bool expected)
         {
-            var actual = input.IsSurrogatePair();
+            var actual = Validator.IsSurrogatePair(input);
             Assert.Equal(expected, actual);
         }
 
@@ -289,7 +289,7 @@ namespace Validator.UnitTest
         [InlineData("Baz", new[] { "Foo", "Bar" }, false)]
         public void IsIn(string input, string[] values, bool expected)
         {
-            var actual = input.IsIn(values);
+            var actual = Validator.IsIn(input, values);
             Assert.Equal(expected, actual);
         }
 
@@ -308,7 +308,7 @@ namespace Validator.UnitTest
         [InlineData("::1", IpVersion.Six, true)]
         public void IsIp(string input, IpVersion version, bool expected)
         {
-            var actual = input.IsIp(version);
+            var actual = Validator.IsIp(input, version);
             Assert.Equal(actual, expected);
         }
 
@@ -321,7 +321,7 @@ namespace Validator.UnitTest
         [InlineData("@invalid.com", false)]
         public void IsEmail(string input, bool expected)
         {
-            var actual = input.IsEmail();
+            var actual = Validator.IsEmail(input);
             Assert.Equal(actual, expected);
         }
 
@@ -333,7 +333,7 @@ namespace Validator.UnitTest
         [InlineData("..", false)]
         public void IsHexadecimal(string input, bool expected)
         {
-            var actual = input.IsHexadecimal();
+            var actual = Validator.IsHexadecimal(input);
             Assert.Equal(expected, actual);
         }
 
@@ -344,7 +344,7 @@ namespace Validator.UnitTest
         [InlineData("Foo_", false)]
         public void IsAlphanumeric(string input, bool expected)
         {
-            var actual = input.IsAlphanumeric();
+            var actual = Validator.IsAlphanumeric(input);
             Assert.Equal(expected, actual);
         }
 
@@ -360,7 +360,7 @@ namespace Validator.UnitTest
         [InlineData("5398228707871528", false)]
         public void IsCreditCard(string input, bool expected)
         {
-            var actual = input.IsCreditCard();
+            var actual = Validator.IsCreditCard(input);
             Assert.Equal(expected, actual);
         }
 
@@ -374,7 +374,7 @@ namespace Validator.UnitTest
         [InlineData("#ff12FG", false)]
         public void IsHexColor(string input, bool expected)
         {
-            var actual = input.IsHexColor();
+            var actual = Validator.IsHexColor(input);
             Assert.Equal(expected, actual);
         }
 
@@ -384,7 +384,7 @@ namespace Validator.UnitTest
         [InlineData("Baz", false)]
         public void IsEqual(string input, bool expected)
         {
-            var actual = input.Equals("Foo");
+            var actual = Validator.Equals(input, "Foo");
             Assert.Equal(expected, actual);
         }
 
@@ -395,7 +395,7 @@ namespace Validator.UnitTest
         [InlineData("{username:\"Admin\"", false)]
         public void IsJson(string input, bool expected)
         {
-            var actual = input.IsJson();
+            var actual = Validator.IsJson(input);
             Assert.Equal(expected, actual);
         }
 
@@ -411,7 +411,7 @@ namespace Validator.UnitTest
         [InlineData("Not05/01A/date/2001", false)]
         public void IsDate(string input, bool expected)
         {
-            var actual = input.IsDate();
+            var actual = Validator.IsDate(input);
             Assert.Equal(expected, actual);
         }
 
@@ -436,7 +436,7 @@ namespace Validator.UnitTest
         [PropertyData("IsAfterData")]
         public void IsAfter(string input, DateTime date, bool expected)
         {
-            var actual = input.IsAfter(date);
+            var actual = Validator.IsAfter(input, date);
             Assert.Equal(expected, actual);
         }
 
@@ -465,7 +465,7 @@ namespace Validator.UnitTest
         [PropertyData("IsBeforeData")]
         public void IsBefore(string input, DateTime date, bool expected)
         {
-            var actual = input.IsBefore(date);
+            var actual = Validator.IsBefore(input, date);
             Assert.Equal(expected, actual);
         }
 
@@ -476,7 +476,7 @@ namespace Validator.UnitTest
         [InlineData("NULL", false)]
         public void IsNull(string input, bool expected)
         {
-            var actual = input.IsNull();
+            var actual = Validator.IsNull(input);
             Assert.Equal(expected, actual);
         }
 
@@ -488,7 +488,7 @@ namespace Validator.UnitTest
         [InlineData("Foo", false)]
         public void IsIsbn(string input, bool expected)
         {
-            var actual = input.IsIsbn();
+            var actual = Validator.IsIsbn(input);
             Assert.Equal(expected, actual);
         }
 
@@ -507,7 +507,7 @@ namespace Validator.UnitTest
         [InlineData("Foo", false)]
         public void IsIsbnVersion10(string input, bool expected)
         {
-            var actual = input.IsIsbn(IsbnVersion.Ten);
+            var actual = Validator.IsIsbn(input, IsbnVersion.Ten);
             Assert.Equal(expected, actual);
         }
 
@@ -519,7 +519,7 @@ namespace Validator.UnitTest
         [InlineData("", " ", false)]
         public void Contains(string input, string element, bool expected)
         {
-            var actual = input.Contains(element);
+            var actual = Validator.Contains(input, element);
             Assert.Equal(expected, actual);
         }
 
@@ -535,9 +535,9 @@ namespace Validator.UnitTest
         [InlineData("0123456789", false)]
         [InlineData("!@#$%^", false)]
         [InlineData("abc@xyz.com", false)] // source input.js would fail this too, i believe
-        public void IsUrl(string url, bool expected)
+        public void IsUrl(string input, bool expected)
         {
-            var actual = url.IsUrl();
+            var actual = Validator.IsUrl(input);
             Assert.Equal(expected, actual);
         }
 
@@ -546,9 +546,9 @@ namespace Validator.UnitTest
         [InlineData("valid.au", true)]
         [InlineData("foobar.com/", true)]
         [InlineData("foobar.com", true)]
-        public void IsUrl2(string url, bool expected)
+        public void IsUrl2(string input, bool expected)
         {
-            var actual = url.IsUrl();
+            var actual = Validator.IsUrl(input);
             Assert.Equal(expected, actual);
         }
 
@@ -561,7 +561,7 @@ namespace Validator.UnitTest
         [InlineData("foo", "Foo", false)]
         public void Matches(string input, string pattern, bool expected)
         {
-            var actual = input.Matches(pattern);
+            var actual = Validator.Matches(input, pattern);
             Assert.Equal(actual, expected);
         }
 
@@ -571,7 +571,7 @@ namespace Validator.UnitTest
         public void MatchesWithOptions(string input, string pattern, 
             RegexOptions options, bool expected)
         {
-            var actual = input.Matches(pattern, options);
+            var actual = Validator.Matches(input, pattern, options);
             Assert.Equal(actual, expected);
         }
 
@@ -588,11 +588,9 @@ namespace Validator.UnitTest
         [InlineData("AAAAAAAA-1111-1111-AAAG-111111111111", false)]
         public void IsUuidWithAnyVersion(string input, bool expectedValid)
         {
-            var actual = input.IsUuid();
+            var actual = Validator.IsUuid(input);
             Assert.Equal(actual, expectedValid);
         }
-
-        
 
         [Theory]
         [InlineData("507f1f77bcf86cd799439011", true)]
@@ -603,7 +601,7 @@ namespace Validator.UnitTest
         [InlineData("507s1f77bcf86cd799439011", false)]
         public void IsMongoId(string input, bool expected)
         {
-            var actual = input.IsMongoId();
+            var actual = Validator.IsMongoId(input);
             Assert.Equal(actual, expected);
         }
 
@@ -616,7 +614,7 @@ namespace Validator.UnitTest
         [InlineData("", 2, false)]
         public void IsByteLength(string input, int min, bool expected)
         {
-            var actual = input.IsByteLength(min);
+            var actual = Validator.IsByteLength(input, min);
             Assert.Equal(actual, expected);
         }
 
@@ -628,7 +626,7 @@ namespace Validator.UnitTest
         [InlineData("", 2, 3, false)]
         public void IsByteLengthWithMax(string input, int min, int max, bool expected)
         {
-            var actual = input.IsByteLength(min, max);
+            var actual = Validator.IsByteLength(input, min, max);
             Assert.Equal(actual, expected);
         }
 
@@ -648,7 +646,7 @@ namespace Validator.UnitTest
         [InlineData("/more.com", false)]
         public void IsFqdn(string input, bool expected)
         {
-            var actual = input.IsFqdn();
+            var actual = Validator.IsFqdn(input);
             Assert.Equal(actual, expected);
         }
 
@@ -657,7 +655,7 @@ namespace Validator.UnitTest
         [InlineData("input")]
         public void IsFqdnWithoutRequireTldOption(string input)
         {
-            var actual = input.IsFqdn(requireTld: false);
+            var actual = Validator.IsFqdn(input, requireTld: false);
             Assert.True(actual);
         }
 
@@ -840,9 +838,9 @@ namespace Validator.UnitTest
         [InlineData("4736338855", "nn-NO", false)]
         [InlineData("66338855", "nn-NO", false)]
         
-        public void IsMobilePhone(string phoneNumber, string locale, bool expected)
+        public void IsMobilePhone(string input, string locale, bool expected)
         {
-            var actual = phoneNumber.IsMobilePhone(locale);
+            var actual = Validator.IsMobilePhone(input, locale);
             Assert.Equal(expected, actual);
         }
     }

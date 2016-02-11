@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Validator
 {
-    public static partial class Validator
+    public partial class Validator
     {
         /// <summary>
         /// Indicates whether input represents a fully qualified domain name.
@@ -13,7 +13,7 @@ namespace Validator
         /// <param name="allowUnderscore"></param>
         /// <param name="allowTrailingDot"></param>
         /// <returns></returns>
-        public static bool IsFqdn(this string input, bool requireTld = true, 
+        public static bool IsFqdn(string input, bool requireTld = true, 
             bool allowUnderscore = false, bool allowTrailingDot = false)
         {
             if (allowTrailingDot && input.EndsWith("."))

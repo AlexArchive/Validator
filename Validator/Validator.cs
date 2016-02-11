@@ -6,14 +6,14 @@ using System.Web.Script.Serialization;
 
 namespace Validator
 {
-    public static partial class Validator
+    public partial class Validator
     {
         /// <summary>
         /// Determine whether input is composed of one or more alphabetic characters only.
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsAlpha(this string input) => 
+        public static bool IsAlpha(string input) => 
             Regex.IsMatch(input, "^[a-zA-Z]+$");
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsLowercase(this string input) => 
+        public static bool IsLowercase(string input) => 
             input == input.ToLower();
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsUppercase(this string input) => 
+        public static bool IsUppercase(string input) => 
             input == input.ToUpper();
         
         /// <summary>
@@ -37,14 +37,14 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsInt(this string input) => IsNumeric(input);
+        public static bool IsInt(string input) => IsNumeric(input);
 
         /// <summary>
         /// Determine whether input represents a valid floating point number.
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsFloat(this string input)
+        public static bool IsFloat(string input)
         {
             float value;
             return float.TryParse(input, out value);
@@ -56,7 +56,7 @@ namespace Validator
         /// <param name="input"></param>
         /// <param name="by">The divisor.</param>
         /// <returns></returns>
-        public static bool IsDivisibleBy(this string input, int @by)
+        public static bool IsDivisibleBy(string input, int @by)
         {
             int value;
             if (!int.TryParse(input, out value))
@@ -74,7 +74,7 @@ namespace Validator
         /// <param name="min">Minimum length.</param>
         /// <param name="max">Maximum length.</param>
         /// <returns></returns>
-        public static bool IsLength(this string input, int min, int max)
+        public static bool IsLength(string input, int min, int max)
         {
             if (input.Length < min)
             {
@@ -94,21 +94,22 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsAscii(this string input) => input.Select(c => (int)c).All(c => c <= 127);
+        public static bool IsAscii(string input) => 
+            input.Select(c => (int)c).All(c => c <= 127);
 
-        public static bool IsMultiByte(this string input) => 
+        public static bool IsMultiByte(string input) => 
             Regex.IsMatch(input, "[^\x00-\x7F]");
 
-        public static bool IsHalfWidth(this string input) => 
+        public static bool IsHalfWidth(string input) => 
             Regex.IsMatch(input, "[\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]");
 
-        public static bool IsFullWidth(this string input) => 
+        public static bool IsFullWidth(string input) => 
             Regex.IsMatch(input, "[^\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]");
 
-        public static bool IsVariableWidth(this string input) => 
+        public static bool IsVariableWidth(string input) => 
             IsHalfWidth(input) && IsFullWidth(input);
 
-        public static bool IsSurrogatePair(this string input) => 
+        public static bool IsSurrogatePair(string input) => 
             Regex.IsMatch(input, "[\uD800-\uDBFF][\uDC00-\uDFFF]");
         
         /// <summary>
@@ -117,7 +118,7 @@ namespace Validator
         /// <param name="input"></param>
         /// <param name="values">Array of string values to search for.</param>
         /// <returns></returns>
-        public static bool IsIn(this string input, string[] values) => 
+        public static bool IsIn(string input, string[] values) => 
             values.Any(value => value == input);
         
         /// <summary>
@@ -126,7 +127,7 @@ namespace Validator
         /// <param name="input"></param>
         /// <param name="version">Valid values are: IpVersion.Four and IpVersion.Six</param>
         /// <returns></returns>
-        public static bool IsIp(this string input, IpVersion version)
+        public static bool IsIp(string input, IpVersion version)
         {
             const string ipv4MaybePattern = @"^(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)$";
             const string ipv6Pattern = @"^::|^::1|^([a-fA-F0-9]{1,4}::?){1,7}([a-fA-F0-9]{1,4})$";
@@ -150,7 +151,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsEmail(this string input)
+        public static bool IsEmail(string input)
         {
             try
             {
@@ -167,7 +168,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsHexadecimal(this string input) => 
+        public static bool IsHexadecimal(string input) => 
             Regex.IsMatch(input, "^[0-9a-fA-F]+$");
         
         /// <summary>
@@ -175,7 +176,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsAlphanumeric(this string input) => 
+        public static bool IsAlphanumeric(string input) => 
             Regex.IsMatch(input, "^[a-zA-Z0-9]+$");
         
         /// <summary>
@@ -183,7 +184,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsHexColor(this string input) => 
+        public static bool IsHexColor(string input) => 
             Regex.IsMatch(input, "^#?(?:[0-9a-fA-F]{3}){1,2}$");
         
         /// <summary>
@@ -192,7 +193,7 @@ namespace Validator
         /// <param name="input"></param>
         /// <param name="comparison"></param>
         /// <returns></returns>
-        public static bool Equals(this string input, string comparison) => 
+        public static bool Equals(string input, string comparison) => 
             input.Equals(comparison);
 
         /// <summary>
@@ -200,7 +201,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsDate(this string input)
+        public static bool IsDate(string input)
         {
             DateTime date;
             return DateTime.TryParse(input, out date);
@@ -212,7 +213,7 @@ namespace Validator
         /// <param name="input"></param>
         /// <param name="date"></param>
         /// <returns></returns>
-        public static bool IsAfter(this string input, DateTime date)
+        public static bool IsAfter(string input, DateTime date)
         {
             DateTime inputDate;
             if (!DateTime.TryParse(input, out inputDate))
@@ -229,7 +230,7 @@ namespace Validator
         /// <param name="input"></param>
         /// <param name="date"></param>
         /// <returns></returns>
-        public static bool IsBefore(this string input, DateTime date)
+        public static bool IsBefore(string input, DateTime date)
         {
             DateTime inputDate;
             if (!DateTime.TryParse(input, out inputDate))
@@ -245,7 +246,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsJson(this string input)
+        public static bool IsJson(string input)
         {
             try
             {
@@ -264,7 +265,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsNull(this string input) => input == null;
+        public static bool IsNull(string input) => input == null;
         
         /// <summary>
         /// Determine whether element appears in supplied input.
@@ -272,7 +273,7 @@ namespace Validator
         /// <param name="input"></param>
         /// <param name="element"></param>
         /// <returns></returns>
-        public static bool Contains(this string input, string element) => 
+        public static bool Contains(string input, string element) => 
             input.Contains(element);
         
         /// <summary>
@@ -282,7 +283,7 @@ namespace Validator
         /// <param name="pattern">Pattern to match against.</param>
         /// <param name="options">Supplied options. Default is None.</param>
         /// <returns></returns>
-        public static bool Matches(this string input, string pattern, RegexOptions options = RegexOptions.None) 
+        public static bool Matches(string input, string pattern, RegexOptions options = RegexOptions.None) 
             => Regex.IsMatch(input, pattern, options);
 
         /// <summary>
@@ -290,7 +291,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsMongoId(this string input) => 
+        public static bool IsMongoId(string input) => 
             input.Length == 24 && IsHexadecimal(input);
         
         /// <summary>
@@ -300,7 +301,7 @@ namespace Validator
         /// <param name="min">Minimum length.</param>
         /// <param name="max">Maximum length.</param>
         /// <returns></returns>
-        public static bool IsByteLength(this string input, int min, int max = int.MaxValue) => 
+        public static bool IsByteLength(string input, int min, int max = int.MaxValue) => 
             input.Length >= min && input.Length <= max;
     }
 }

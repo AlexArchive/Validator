@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Validator
 {
-    public static partial class Validator
+    public partial class Validator
     {
         private const char PaddingCharacter = '=';
         private static readonly HashSet<char> Base64Characters = new HashSet<char>() 
@@ -18,7 +18,7 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsBase64(this string input)
+        public static bool IsBase64(string input)
         {
             input = SanitizeInput(input);
 

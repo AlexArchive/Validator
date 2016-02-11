@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Validator
 {
-    public static partial class Validator
+    public partial class Validator
     {
         private static readonly Dictionary<string, Regex> LocaleMobilePhoneRegexes = new Dictionary<string, Regex>
 		{
@@ -26,18 +26,18 @@ namespace Validator
         /// <summary>
         /// Determines whether the given phone number is a mobile phone number or not.
         /// </summary>
-        /// <param name="phoneNumber">The phone number to check.</param>
+        /// <param name="input">The phone number to check.</param>
         /// <param name="locale">The locale to look in.</param>
         /// <returns>True if it is a mobile phone number, false otherwise.</returns>
         /// <remarks>
         /// Relies on locales that use specific blocks of numbers for mobile phone numbers.
         /// </remarks>
-        public static bool IsMobilePhone(this string phoneNumber, string locale)
+        public static bool IsMobilePhone(string input, string locale)
         {
             Regex localeRegex;
             if (LocaleMobilePhoneRegexes.TryGetValue(locale, out localeRegex))
             {
-                return localeRegex.IsMatch(phoneNumber);
+                return localeRegex.IsMatch(input);
             }
             
             return false;
