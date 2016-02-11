@@ -2,14 +2,14 @@
 
 namespace Validator
 {
-    public partial class Validator
+    public static partial class Validator
     {
         /// <summary>
         /// Indicates whether input is in correct format for a credit card number and is valid.
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsCreditCard(string input)
+        public static bool IsCreditCard(this string input)
         {
             input = input.Replace(" ", "");
             input = input.Replace("-", "");

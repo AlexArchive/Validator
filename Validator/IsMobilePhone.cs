@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Validator
 {
-    public partial class Validator
+    public static partial class Validator
     {
         private static readonly Dictionary<string, Regex> LocaleMobilePhoneRegexes = new Dictionary<string, Regex>
 		{
@@ -32,7 +32,7 @@ namespace Validator
         /// <remarks>
         /// Relies on locales that use specific blocks of numbers for mobile phone numbers.
         /// </remarks>
-        public static bool IsMobilePhone(string phoneNumber, string locale)
+        public static bool IsMobilePhone(this string phoneNumber, string locale)
         {
             Regex localeRegex;
             if (LocaleMobilePhoneRegexes.TryGetValue(locale, out localeRegex))
