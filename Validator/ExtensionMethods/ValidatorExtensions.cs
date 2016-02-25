@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Validator
+namespace Validator.ExtensionMethods
 {
     public static class ValidatorExtensions
     {
