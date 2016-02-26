@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+//using Validator.ExtensionMethods;
 using static System.Int32;
 
 namespace Validator
@@ -320,7 +321,6 @@ namespace Validator
                 }
             }
 
-            // broke these out from the below if statement simply for readability
             var isIp = Validator.IsIp(host, IpVersion.Four) || Validator.IsIp(host, IpVersion.Six);
             var isFqdn = Validator.IsFqdn(host);
 

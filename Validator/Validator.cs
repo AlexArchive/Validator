@@ -94,7 +94,8 @@ namespace Validator
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static bool IsAscii(string input) => input.Select(c => (int)c).All(c => c <= 127);
+        public static bool IsAscii(string input) => 
+            input.Select(c => (int)c).All(c => c <= 127);
 
         public static bool IsMultiByte(string input) => 
             Regex.IsMatch(input, "[^\x00-\x7F]");

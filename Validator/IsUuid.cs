@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Validator
 {
-    partial class Validator
+    public partial class Validator
     {
         private const string AllVersionsRegex = "^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$";
         private const string V3Regex = "^[0-9A-F]{8}-[0-9A-F]{4}-3[0-9A-F]{3}-[0-9A-F]{4}-[0-9A-F]{12}$";

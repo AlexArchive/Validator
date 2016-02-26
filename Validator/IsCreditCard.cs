@@ -2,7 +2,7 @@
 
 namespace Validator
 {
-    public partial class Validator
+     public partial class Validator
     {
         /// <summary>
         /// Indicates whether input is in correct format for a credit card number and is valid.
