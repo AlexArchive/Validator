@@ -108,7 +108,7 @@ namespace Validator.ExtensionMethods
             Validator.IsSurrogatePair(input);
 
         /// <summary>
-        /// Determin whether any strings in values, appear in the input.
+        /// Determine whether any strings in values, appear in the input.
         /// </summary>
         /// <param name="input"></param>
         /// <param name="values">Array of string values to search for.</param>
