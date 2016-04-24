@@ -97,18 +97,43 @@ namespace Validator
         public static bool IsAscii(string input) => 
             input.Select(c => (int)c).All(c => c <= 127);
 
+        /// <summary>
+        /// Determiner whether the string contains one or more multibyte chars.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static bool IsMultiByte(string input) => 
             Regex.IsMatch(input, "[^\x00-\x7F]");
 
+        /// <summary>
+        /// Determine whether the string contains any half-width chars.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static bool IsHalfWidth(string input) => 
             Regex.IsMatch(input, "[\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]");
 
+        /// <summary>
+        /// Determine if the string contains any full-width chars.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static bool IsFullWidth(string input) => 
             Regex.IsMatch(input, "[^\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]");
 
+        /// <summary>
+        /// Determine if the string contains a mixture of full and half-width chars.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static bool IsVariableWidth(string input) => 
             IsHalfWidth(input) && IsFullWidth(input);
 
+        /// <summary>
+        /// Determine if the string contains any surrogate pairs chars.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static bool IsSurrogatePair(string input) => 
             Regex.IsMatch(input, "[\uD800-\uDBFF][\uDC00-\uDFFF]");
         

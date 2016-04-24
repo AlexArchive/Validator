@@ -72,18 +72,38 @@ namespace Validator.ExtensionMethods
         public static bool IsAscii(this string input) =>
             Validator.IsAscii(input);
 
+        /// <summary>
+        /// Determiner whether the string contains one or more multibyte chars.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static bool IsMultiByte(this string input) =>
             Validator.IsMultiByte(input);
 
+        /// <summary>
+        /// Determine whether the string contains any half-width chars.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static bool IsHalfWidth(this string input) =>
             Validator.IsHalfWidth(input);
 
         public static bool IsFullWidth(this string input) =>
             Validator.IsFullWidth(input);
 
+        /// <summary>
+        /// Determine if the string contains any full-width chars.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static bool IsVariableWidth(this string input) =>
             Validator.IsVariableWidth(input);
 
+        /// <summary>
+        /// Determine if the string contains any surrogate pairs chars.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static bool IsSurrogatePair(this string input) =>
             Validator.IsSurrogatePair(input);
 
