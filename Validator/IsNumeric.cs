@@ -9,38 +9,8 @@
         /// <returns></returns>
         public static bool IsNumeric(string input)
         {
-            if (input == null)
-            {
-                return false;
-            }
-            
-            var length = input.Length;
-            if (length == 0)
-            {
-                return false;
-            }
-            
-            var i = 0;
-            if (input[0] == '-')
-            {
-                if (length == 1)
-                {
-                    return false;
-                }
-
-                i = 1;
-            }
-
-            for (; i < length; i++)
-            {
-                char c = input[i];
-                if (c <= '/' || c >= ':')
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            double dummy;
+            return double.TryParse(input, out dummy);
         }
     }
 }
