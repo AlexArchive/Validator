@@ -74,20 +74,8 @@ namespace Validator
         /// <param name="min">Minimum length.</param>
         /// <param name="max">Maximum length.</param>
         /// <returns></returns>
-        public static bool IsLength(string input, int min, int max)
-        {
-            if (input.Length < min)
-            {
-                return false;
-            }
-
-            if (input.Length > max)
-            {
-                return false;
-            }
-            
-            return true;
-        }
+        public static bool IsLength(string input, int min, int max) =>
+            input.Length > min && input.Length < max;
 
         /// <summary>
         /// Determine whether all characters within string are ASCII based.
