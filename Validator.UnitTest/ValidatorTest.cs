@@ -112,8 +112,13 @@ namespace Validator.UnitTest
 
         [Theory]
         [InlineData("123", true)]
+        [InlineData("123.123", true)]
         [InlineData("Foo", false)]
         [InlineData("123Foo123", false)]
+        [InlineData("-123", true)]
+        [InlineData("-123.18", true)]
+        [InlineData("55,123", true)]
+        [InlineData("-55,123", true)]
         public void IsNumeric(string input, bool expected)
         {
             var actual = Validator.IsNumeric(input);
@@ -156,10 +161,15 @@ namespace Validator.UnitTest
 
         [Theory]
         [InlineData("123", true)]
-        [InlineData("50000000000000000000000000", true)]
+        [InlineData("9223372036854775807", true)] // long.MaxValue
+        [InlineData("9223372036854775808", false)] // long.MaxValue + 1
+        [InlineData("-9223372036854775808", true)] // long.MinValue
+        [InlineData("-9223372036854775809", false)] // long.MinValue - 1
         [InlineData("123.123", false)]
         [InlineData("", false)]
         [InlineData("", false)]
+        [InlineData("55,123", false)]
+        [InlineData("-55,123", false)]
         public void IsInt(string input, bool expected)
         {
             var actual = Validator.IsInt(input);

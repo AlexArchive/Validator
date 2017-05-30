@@ -33,13 +33,6 @@ namespace Validator
             input == input.ToUpper();
         
         /// <summary>
-        /// Determine whether input represents a numeric number.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public static bool IsInt(string input) => IsNumeric(input);
-
-        /// <summary>
         /// Determine whether input represents a valid floating point number.
         /// </summary>
         /// <param name="input"></param>

@@ -47,6 +47,7 @@
     <Compile Include="IsbnVersion.cs" />
     <Compile Include="IsCreditCard.cs" />
     <Compile Include="IsFqdn.cs" />
+    <Compile Include="IsInt.cs" />
     <Compile Include="IsIsbn.cs" />
     <Compile Include="IsMobilePhone.cs" />
     <Compile Include="IsNumeric.cs" />
