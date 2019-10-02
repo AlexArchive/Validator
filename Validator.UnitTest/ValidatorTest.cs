@@ -534,7 +534,7 @@ namespace Validator.UnitTest
         [InlineData("01/01/01", false)]
         [InlineData("0123456789", false)]
         [InlineData("!@#$%^", false)]
-        [InlineData("abc@xyz.com", false)] // source input.js would fail this too, i believe
+        [InlineData("abc@xyz.com", false)] // source input.js would fail this too, as far as i know.
         public void IsUrl(string input, bool expected)
         {
             var actual = Validator.IsUrl(input);
@@ -627,7 +627,7 @@ namespace Validator.UnitTest
         public void IsByteLengthWithMax(string input, int min, int max, bool expected)
         {
             var actual = Validator.IsByteLength(input, min, max);
-            Assert.Equal(actual, expected);
+            Assert.Equal(actual, expected); // assert equal is a method from the inbuilt library.
         }
 
         [Theory]
